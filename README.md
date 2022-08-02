@@ -10,7 +10,7 @@ Convert &amp; Format drives with 4096 PBS/LBS (phisical/logical-block-size
 1. A 'nvme' drive supporting 4Kn directly or at least allow to switch between different (at least tween 512B & 4096) sector-sizes.
 2. Manufacturer supporting switching are 'Corsair' since at least model 'MP5xx' and 'WD'. The latter has not been checked, please contact me to make a complete list.
 3. The increased throughput is assured by "PCI-e', this mean 'nvme' in 'M.2' design.
-4. A live installation-usb with a Linux-Distro or a computer that already has a Linux on it.
+4. A live installation-usb with a Linux-Distro (e.g. [Artix-Linux-Plasma](https://download.artixlinux.org/iso/artix-plasma-openrc-20220713-x86_64.iso)) or a computer that already has a Linux on it.
 5. Possibility to install additional programs like `nvme-cli`, `sgdisk`, `kaprtx`/`multipath-tools`   
 
 ### 3. Suitable manufacturers and models.
