@@ -21,9 +21,12 @@ Convert &amp; Format drives with 4096 PBS/LBS (phisical/logical-block-size
 
 ### 4. Let's go!
 1. In case you want erase the whole 'nvme', use the command below. READ THE NOTES FIRST !!! 
-**Note 1**: This erase all the data including 'hidden bootsector', 'RAID-configuration-data' & older 'OS-starting-data'. Use it only if you know what you are doing. In case your 'nvme' have a lower 'PBS/LBS' you can at end note the elapsed time and compare it after the 'switching'.
-**Note** 2: This step is necessary if your drive was used as 'BSD' (Free-BSD, True-NAS) data carrier or hosted a such operating-system (OS), if it was used in a RAID-assembly or hosted an OS starting with old BIOS and not UEFI
-**Note 3**: Countercheck that you choose the right drive with `lsblk` command or equivalent.
+
+- **Note 1**: This erase all the data including 'hidden bootsector', 'RAID-configuration-data' & older 'OS-starting-data'. Use it only if you know what you are doing. In case your 'nvme' have a lower 'PBS/LBS' you can at end note the elapsed time and compare it after the 'switching'.
+
+- **Note** 2: This step is necessary if your drive was used as 'BSD' (Free-BSD, True-NAS) data carrier or hosted a such operating-system (OS), if it was used in a RAID-assembly or hosted an OS starting with old BIOS and not UEFI
+
+- **Note 3**: Countercheck that you choose the right drive with `lsblk` command or equivalent.
 ```
 dd if=/dev/zero of=/dev/nvme0n1 bs=4096 status=progress
 ```
