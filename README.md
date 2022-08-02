@@ -258,4 +258,4 @@ hdparm --dco-restore /dev/sdd
 ```
 5. Check result repeating point **6.3.**
 
-- [x] Done & Enjoy !
+- [x] **Done & Enjoy !**
