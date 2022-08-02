@@ -99,9 +99,9 @@ dd if=/dev/zero of=/dev/nvme0n1 bs=4096 status=progress
 ```
 ### 5. Partitioning & Formatting
 - **Note 1**: Here are three different things to setup; 
-  - 1. Partition-table type (GPT or MBR/DOS), 
-  - 2. Partitioning of drive (subdivision), 
-  - 3. Formatting the partition with a file-system (fs) e.g. 'ext4', 'btrfs', 'FAT-32' etc..
+  - 1) Partition-table type (GPT or MBR/DOS), 
+  - 2) Partitioning of drive (subdivision), 
+  - 3) Formatting the partition with a file-system (fs) e.g. 'ext4', 'btrfs', 'FAT-32' etc..
 - **Note 2**: I prefere to do it (for many reasons) manually; 
   - a) better control of 'start & end' (letting empty space at end of drive), 
   - b) exact dimensions (in KiB, MiB, GiB, etc.), 
