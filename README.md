@@ -11,7 +11,8 @@ Convert &amp; Format drives with 4096 PBS/LBS (phisical/logical-block-size
 2. Manufacturer supporting switching are 'Corsair' since at least model 'MP5xx' and 'WD'. The latter has not been checked, please contact me to make a complete list.
 3. The increased throughput is assured by "PCI-e', this mean 'nvme' in 'M.2' design.
 4. A live installation-usb with a Linux-Distro (e.g. [Artix-Linux-Plasma](https://download.artixlinux.org/iso/artix-plasma-openrc-20220713-x86_64.iso)) or a computer that already has a Linux on it.
-5. Possibility to install additional programs like `nvme-cli`, `sgdisk`, `kaprtx`/`multipath-tools`   
+5. Possibility to install additional programs like `nvme-cli`, `sgdisk`, `kaprtx`/`multipath-tools`
+6. Assure you can akt as 'Admin/Root' with/over `sudo`, `sudo -s` or `su -s`   
 
 ### 3. Suitable manufacturers and models (white-list only).
 #### NVMe's M.2 (PCIe)
@@ -35,7 +36,7 @@ dd if=/dev/zero of=/dev/nvme0n1 bs=4096 status=progress
 ```
 2. Install missing programs if needed:
 ```
-sudo pacman -S --needed nvme-cli gptfdisk multipath-tools
+pacman -S --needed nvme-cli gptfdisk multipath-tools
 ```
 3. Check LBA-status/mode:
 ```
@@ -99,20 +100,89 @@ dd if=/dev/zero of=/dev/nvme0n1 bs=4096 status=progress
 ```
 ### 5. Partitioning & Formatting
 - **Note 1**: Here are three different things to setup; 
-  - a) 1. Partition-table type (GPT or MBR/DOS), 
-  - b) 2. Partitioning of drive (subdivision), 
-  - c) 3 .Formatting the partition with a file-system (fs) e.g. 'ext4', 'btrfs', 'FAT-32' etc..
+  - a) 1. Partition-table type (GPT or MBR/DOS). 
+  - b) 2. Partitioning of drive (subdivision). 
+  - c) 3. Formatting the partition with a file-system (fs) e.g. 'ext4', 'btrfs', 'FAT-32' etc..
 - **Note 2**: I prefere to do it (for many reasons) manually; 
-  - a) better control of 'start & end' (letting empty space at end of drive), 
-  - b) exact dimensions (in KiB, MiB, GiB, etc.), 
-  - c) commit/assign special parameters assuring/force 4KiB block-size (that other CLI- or Visual-Tools don't do), 
+  - a) better control of 'start & end' (letting empty space at end of drive). 
+  - b) exact dimensions (in KiB, MiB, GiB, etc.). 
+  - c) commit/assign special parameters assuring/force 4KiB block-size (that other CLI- or Visual-Tools don't do). 
   - d) plan exactly in a text-file or script avoiding errors.
-
 #### 5.1. Partition-table
+- **Note**: Check anyway you select the right drive with `lsblk` and/or `fdisk -l /dev/nvme0n1` or `sgdisk -p /dev/nvme0n1`
+1. Erase all partition-table information present on the drive:
+```
+sgdisk -Z /dev/nvme0n1
+```
+2. Make a new GPT partition-table
+```
+sgdisk -o /dev/nvme0n1
+```
+3. In case you cannot reach the drive issue this command and reboot:
+```
+blkdiscard /dev/nvme0n1
+```
+#### 5.2. Partitioning
+- **Note 1**: Assure you use full KiB, MiB, GiB and not KB, MB, GB. Use besides an uniformed measure, on my side I prefer GiB. Calculate in advance the partitions sizes, e.g. from command `fdisk -l /dev/nvme0n1` I know my drive contain '2000398934016 bytes' divided by '1024*1024*1024' (this is equal to 1 GiB) have I a total of 1863 GiB.
+1. EFI-partition
+```
+sgdisk -n 1:1M:+1G -t 1:ef00 -c 1:EFI-0003 /dev/nvme0n1
+```
+2. OS-partition
+```
+sgdisk -n 2:0:+1860G -t 2:8300 -c 2:ARTIX-0003 /dev/nvme0n1
+```
+3. SWAP-partition, in case you want one... reduce the size of OS-partition
+```
+sgdisk -n 3:0:+8G -t 3:8200 -c 3:SWAP-0003 /dev/nvme0n1
+```
+4. Once you’ve created partition successfully, you need to update the partition table changes to kernel for that let us run the partprobe command to add the disk information to kernel and after that list the partition as shown below.
+```
+partprobe -s
+```
+- Other information and man-page of 'sgdisk`
+  - [SGDISK](https://www.rodsbooks.com/gdisk/sgdisk-walkthrough.html)
+  - [SGDISK Man-Page](https://man.archlinux.org/man/sgdisk.8.en)
 
-
-
-
+#### 5.3. Formatting
+- **Note**: In case you get error messages by formatting... again, the Kernel not yet recognized your changes. Use command `kpartx -u /dev/nvme0n1` or reboot.
+1. Formatting EFI-part. in 4Kn/4KiB
+```
+mkfs.vfat -F32 -s 2 -S 4096 -v /dev/nvme0n1p1
+```
+2. Formatting OS-part in 4Kn/4KiB
+```
+mkfs.ext4 -F -b 4096 -F /dev/nvme0n1p2
+```
+3. Formatting SWAP-part in 4Kn/4KiB
+```
+mkswap -f -p 4096 /dev/nvme0n1p3
+```
+- **Note** for formatting:
+  - a) 1. EFI: Use exact above parameter
+  - b) 2. Ext4: We have to force twice this operation '-F' in order to take effect.
+  - c) 3. Swap: Normally the 'page-size' with the option `-f -p 4096` [is not necessary](https://www.computerhope.com/unix/mkswap.htm)
+#### 5.4. Additional steps in case of need
+1. Labelling partitions even after formatting:
+```
+sgdisk -c 1:EFI-0003 /dev/nvme0n1
+sgdisk -c 2:ARTIX-0003 /dev/nvme0n1
+sgdisk -c 3:SWAP-0003 /dev/nvme0n1
+```
+- **Note**: EFI & SWAP normally don't need a label at all.
+2. Format OS-part. to [btrfs](https://wiki.archlinux.org/title/btrfs)
+- Install in case `btrfs-progs`. In most of the today’s latest Linux distributions, btrfs package comes as pre-installed. If not, install btrfs package using the following command. 
+```
+pacman -S btrfs-progs
+```
+- Enable `btrfs` in the Kernel. After btrfs package has been installed on the system, now we need to enable the Kernel module for btrfs using below command.
+```
+modprobe btrfs
+```
+- Format finally the OS-part. partitioned as `8300` Linux-fs as `btrfs`
+```
+mkfs.btrfs /dev/nvme0n1p2
+```
 
 
 
