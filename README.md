@@ -13,10 +13,13 @@ Convert &amp; Format drives with 4096 PBS/LBS (phisical/logical-block-size
 4. A live installation-usb with a Linux-Distro (e.g. [Artix-Linux-Plasma](https://download.artixlinux.org/iso/artix-plasma-openrc-20220713-x86_64.iso)) or a computer that already has a Linux on it.
 5. Possibility to install additional programs like `nvme-cli`, `sgdisk`, `kaprtx`/`multipath-tools`   
 
-### 3. Suitable manufacturers and models.
+### 3. Suitable manufacturers and models (white-list only).
+#### NVMe's M.2 (PCIe)
 1. Corsair serie 'MP 5xx' & 'Force 600' (Phison controller)
 2. Western-Digital (WD) to be confirmed
-3. Western-Digital (WD) HDD 'Red NAS' or 'Pro' (through `hdpharm`) see "Convert HDD" chapter below.
+
+#### HDD's
+1. Western-Digital (WD) HDD 'Red NAS' or 'Pro' (through `hdpharm`) see "Convert HDD" chapter below.
 
 
 ### 4. Let's go!
@@ -24,7 +27,7 @@ Convert &amp; Format drives with 4096 PBS/LBS (phisical/logical-block-size
 
 - **Note 1**: This erase all the data including 'hidden bootsector', 'RAID-configuration-data' & older 'OS-starting-data'. Use it only if you know what you are doing. In case your 'nvme' have a lower 'PBS/LBS' you can at end note the elapsed time and compare it after the 'switching'.
 
-- **Note** 2: This step is necessary if your drive was used as 'BSD' (Free-BSD, True-NAS) data carrier or hosted a such operating-system (OS), if it was used in a RAID-assembly or hosted an OS starting with old BIOS and not UEFI
+- **Note** 2: This step is necessary if your drive was used as 'BSD' (Free-BSD, True-NAS) data carrier or hosted a such operating-system (OS), if it was used in a RAID-assembly & or ZFS, hosted an OS starting with old BIOS and not with UEFI.
 
 - **Note 3**: Countercheck that you choose the right drive with `lsblk` command or equivalent.
 ```
@@ -51,17 +54,17 @@ nvme format /dev/nvme0n1 -l 1
 ```
 Success formatting namespace:1
 ````
-**Note**: This tell the 'nvme'-controller to use the storage cells in '4KiB'-blocks. Of course, due change/switch of blocks-dimension are all data lost, hence is called 'formatting'.
+- **Note**: This tell the 'nvme'-controller to use the storage cells in '4KiB'-blocks. Of course, due change/switch of blocks-dimension are all data lost, hence is called 'formatting'.
 5. Recheck LBA-status/mode:
 ```
 nvme id-ns /dev/nvme1n1 -H | grep LBA
 ```
-output:
+- output:
 ```
 LBA Format  0 : Metadata Size: 0   bytes - Data Size: 512 bytes - Relative Performance: 0x2 Good 
 LBA Format  1 : Metadata Size: 0   bytes - Data Size: 4096 bytes - Relative Performance: 0x1 Better (in use)
 ```
-- or
+- or commands
 ```
 cat /sys/block/nvme0n1/queue/physical_block_size
 
@@ -81,7 +84,7 @@ Node                     Model                    Format
 ```
 fdisk -l /dev/nvme0n1
 ```
-**Note**: With this command you get all drive-parameter like 'sectors', 'bytes' etc.. 
+- **Note**: With this command you get all drive-parameter like 'sectors', 'bytes' etc.. 
 ```
 Disk /dev/nvme0n1: 1,82 TiB, 2000398934016 bytes, 488378646 sectors
 Disk model: Force MP600                             
@@ -90,12 +93,15 @@ Sector size (logical/physical): 4096 bytes / 4096 bytes
 I/O size (minimum/optimal): 4096 bytes / 4096 bytes
 ```
 7. Recheck the speed!?
-**Note**: The Linux-Kernel is (most probably) not yet aware of your made changes, reboot in this case before issuing the command!
+- **Note**: The Linux-Kernel is (most probably) not yet aware of your made changes, reboot in this case before issuing the command!
 ```
 dd if=/dev/zero of=/dev/nvme0n1 bs=4096 status=progress
 ```
 ### 5. Partitioning & Formatting
-
+- **Note 1**: Here are three different things to setup; 1. Partition-table type (GPT or MBR/DOS), 2. Partitioning of drive (subdivision), 3. Formatting the partition with a file-system (fs) e.g. 'ext4', 'btrfs', 'FAT-32' etc..
+- **Note 2**: I prefere to do it (for many reasons) manually; a.. better control of 'start & end' (letting empty space at end of drive), b.. exact dimensions (in KiB, MiB, GiB, etc.), c.. commit/assign special parameters assuring/force 4KiB block-size (that other CLI- or Visual-Tools don't do), d.. plan exactly in a text-file or script avoiding errors.
+-- xyz
+#### 5.1. Partition-table
 
 
 
