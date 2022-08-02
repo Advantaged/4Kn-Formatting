@@ -208,7 +208,7 @@ mkfs.btrfs /dev/nvme0n1p2
 UUID=<uuid-of-dev-nvme0n1p2>  / noatime,space_cache=v2,compress=zstd,ssd,discard=async,subvol=@ 0 0
 UUID=<uuid-of-dev-nvme0n1p2>  /home noatime,space_cache=v2,compress=zstd,ssd,discard=async,subvol=@home 0 0
 ```
-4. Backup & restore with `btrfs`
+4. Backup & restore with `btrfs`, for this install `timeshift` & `timeshift-autosnap`. 
 ```
 5 aur/timeshift-bin 22.06.1-1 [+11 ~1.91]
     A system restore utility for Linux
