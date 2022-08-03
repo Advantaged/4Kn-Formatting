@@ -20,7 +20,7 @@ Convert &amp; Format drives with 4096 PBS/LBS (phisical/logical-block-size
 2. Western-Digital (WD) to be confirmed
 
 #### HDD's
-1. Western-Digital (WD) HDD 'Red NAS' or 'Pro' (through `hdpharm`) see "Convert HDD" chapter below.
+1. Western-Digital (WD) HDD 'Red NAS' or 'Pro' (through `hdparm`) see "Convert HDD" chapter below.
 
 
 ### 4. Let's go!
