@@ -218,7 +218,7 @@ UUID=<uuid-of-dev-nvme0n1p2>  /home noatime,space_cache=v2,compress=zstd,ssd,dis
     A system restore utility for Linux
 ```
 ### 6. Convert/switch an HDD to 4Kn
-- Following these threads: [Check/Switch LBA](https://unix.stackexchange.com/questions/562571/switching-hdd-sector-size-to-4096-bytes)
+- Following these threads: [Check/Switch LBA](https://unix.stackexchange.com/questions/562571/switching-hdd-sector-size-to-4096-bytes),
 [Arch-Linux](https://wiki.archlinux.org/index.php/Advanced_Format), [WD](https://documents.westerndigital.com/content/dam/doc-library/en_us/assets/public/western-digital/collateral/white-paper/white-paper-advanced-format.pdf), [HGST](https://documents.westerndigital.com/content/dam/doc-library/en_us/assets/public/western-digital/collateral/tech-brief/tech-brief-advanced-format.pdf).
 - **Note-s**:
   - a) This conversion can cause unexpected results. Use it only if you know what you are doing.
