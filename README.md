@@ -246,7 +246,7 @@ Physical Sector size: 4096 bytes
 ```
 - For an existing filesystem the block size can be determined with:
 ```
-tune2fs -l /dev/sde
+tune2fs -l /dev/sdd
 ```
 4. Change/switch LBA (logical block size)
 ```
