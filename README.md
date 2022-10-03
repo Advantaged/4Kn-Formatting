@@ -20,7 +20,7 @@ Convert &amp; Format drives with 4096 PBS/LBS (phisical/logical-block-size
 2. Western-Digital (WD) to be confirmed
 
 #### HDD's
-1. Western-Digital (WD) HDD 'Red NAS' or 'Pro' (through `hdparm`) see "Convert HDD" chapter '6.' below.
+1. Western-Digital (WD) HDD 'Red NAS' or 'Pro' (through `hdparm`) see "Convert HDD" chapter **6.** below.
 
 
 ### 4. Let's go!
@@ -94,7 +94,8 @@ Sector size (logical/physical): 4096 bytes / 4096 bytes
 I/O size (minimum/optimal): 4096 bytes / 4096 bytes
 ```
 7. Recheck the speed!?
-- **Note**: The Linux-Kernel is (most probably) not yet aware of your made changes, reboot in this case before issuing the command!
+- **Note**: The Linux-Kernel is (most probably) not yet aware of your made changes, use command-s <br/>
+   `kpartx -u /dev/nvme0n1` or `partprobe -s` or reboot before issuing the command!
 ```
 dd if=/dev/zero of=/dev/nvme0n1 bs=4096 status=progress
 ```
