@@ -148,7 +148,7 @@ partprobe -s
   - [SGDISK Man-Page](https://man.archlinux.org/man/sgdisk.8.en)
 
 #### 5.3. Formatting
-- **Note 1**: In case you get error messages by formatting... again, the Kernel not yet recognized your changes. Use command-s:
+- **Note 1**: In case you get error messages by formatting... again, the Kernel not yet recognized your changes. Use command-s:<br/>
    `kpartx -u /dev/nvme0n1` or `partprobe -s` or reboot.
 1. Formatting EFI-part in 4Kn/4KiB
 ```
