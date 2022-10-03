@@ -11,7 +11,7 @@ Convert &amp; Format drives with 4096 PBS/LBS (phisical/logical-block-size
 2. Manufacturer supporting switching are 'Corsair' (since at least model 'MP5xx') and 'WD' (Western Digital). The latter has not been checked all models/series, please contact me to make a complete list. Please commit all manufacturer, serie and model you was able to convert, thanks.
 3. The increased throughput is assured by "PCI-e', this mean 'nvme' in 'M.2' design.
 4. A live installation-usb with a Linux-Distro (e.g. [Artix-Linux-Plasma](https://download.artixlinux.org/iso/artix-plasma-openrc-20220713-x86_64.iso)) or a computer that already has a Linux on it.
-5. Possibility to install additional programs like `nvme-cli`, `sgdisk`, `kaprtx`/`multipath-tools`
+5. Possibility to install additional programs like `nvme-cli`, `sgdisk`, `kpartx`/`multipath-tools`
 6. Assure you can akt as 'Admin/Root' with/over `sudo`, `sudo -s` or `su -s`   
 
 ### 3. Suitable manufacturers and models (white-list only).
