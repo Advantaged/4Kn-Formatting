@@ -24,7 +24,7 @@ Convert & Format drives with 4096 PBS/LBS (phisical/logical-block-size
 
 #### SSD (SATA)
 1. [Crucial® MX500 Solid State Drive](https://h30434.www3.hp.com/t5/Desktop-Hardware-and-Upgrade-Questions/SSD-512-byte-sector/td-p/8347744)
-2. Samsung® SSD 850 EVO 250GB (just formatted in 'ext4' 4K `mkfs.ext4 -F -b 4096 -F /dev/nvme0n1p2`)
+2. Samsung® SSD 850 EVO 250GB (just formatted in 'ext4' 4K `mkfs.ext4 -F -b 4096 -F /dev/sda1`)
 
 ### 4. Let's go!
 1. In case you want erase the whole 'nvme', use the command below. READ THE NOTES FIRST !!! 
