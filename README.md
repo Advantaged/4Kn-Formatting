@@ -148,7 +148,8 @@ partprobe -s
   - [SGDISK Man-Page](https://man.archlinux.org/man/sgdisk.8.en)
 
 #### 5.3. Formatting
-- **Note 1**: In case you get error messages by formatting... again, the Kernel not yet recognized your changes. Use command `kpartx -u /dev/nvme0n1` or `partprobe -s` or reboot.
+- **Note 1**: In case you get error messages by formatting... again, the Kernel not yet recognized your changes. Use command-s:
+   `kpartx -u /dev/nvme0n1` or `partprobe -s` or reboot.
 1. Formatting EFI-part in 4Kn/4KiB
 ```
 mkfs.vfat -F32 -s 2 -S 4096 -v /dev/nvme0n1p1
@@ -177,6 +178,31 @@ Device          Start       End   Sectors  Size Type
 /dev/nvme0n1p1    256    262399    262144    1G EFI System
 /dev/nvme0n1p2 262400 487850239 487587840  1,8T Linux filesystem
 ```
+5. These are the results (with swap = RAM x 1.5 = 96 GiB) of my 'nvme':
+```
+disk -l /dev/nvme0n1
+Disk /dev/nvme0n1: 1,82 TiB, 2000398934016 bytes, 488378646 sectors
+Disk model: Force MP600                             
+Units: sectors of 1 * 4096 = 4096 bytes
+Sector size (logical/physical): 4096 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+Disklabel type: gpt
+Disk identifier: 4C8B88A0-1775-478B-8B90-857B4A705215
+
+Device             Start       End   Sectors  Size Type
+/dev/nvme0n1p1       256    262399    262144    1G EFI System
+/dev/nvme0n1p2    262400 461635839 461373440  1,7T Linux filesystem
+/dev/nvme0n1p3 461635840 486801663  25165824   96G Linux swap
+```
+6. Explanation-Table of partitioning & formatting
+
+| Partition N° | Dimension | Type | Description |
+| --- | --- | ---- | ---- |
+| 1 | 1 GiB | EFI (ef00) | large enough for 'rEFInd' and many other 'OS' |
+| 2 | 1760 GiB | Linux (8300) | 32 GiB x 55 |
+| 3 | 96 GiB | Swap (8200) | 32 GiB x 3 |
+| empty | 6 GiB | none | overprovisioning: 3 Gib by no swap 6 Gib with swap |
+
 - **Note** for formatting:
   - a) 1. EFI: Use exact above parameter
   - b) 2. Ext4: We have to force twice this operation '-F' in order to take effect.
