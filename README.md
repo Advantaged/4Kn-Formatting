@@ -1,5 +1,7 @@
 # 4Kn-Formatting
-Convert &amp; Format drives with 4096 PBS/LBS (phisical/logical-block-size
+Convert & Format drives with 4096 PBS/LBS (phisical/logical-block-size
+
+- **Note**: Some manufacturer use '4096' as 'physical_block_size' but '512e' or '512' as 'logical_block_size' ([see here the differences](https://en.wikipedia.org/wiki/Advanced_Format#Overview)). Well, some manufacturer allow to modify/change the LBS (for-all by 'NVMe') and some don't. Some other use '4096n / 4Kn' (it's mean native) both as PBS and LBS (for-all by very big HDD's).
 
 ### 1. Scope of instructions
 1. Run a 'nvme' drive with '4096' Byte sectors instead of '512' or '512B'.
