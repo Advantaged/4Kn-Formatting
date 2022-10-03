@@ -19,11 +19,14 @@ Convert & Format drives with 4096 PBS/LBS (phisical/logical-block-size
 ### 3. Suitable manufacturers and models (white-list only).
 
 #### NVMe's M.2 (PCIe)
-1. Corsair® serie 'MP 5xx' & ['Force 600'](https://forum.corsair.com/forums/topic/165279-mp600-2tb-cssd-f2000gbmp600/) (Phison controller)
+1. Corsair® serie 'MP 5xx' & ['MP Force 600'](https://forum.corsair.com/forums/topic/165279-mp600-2tb-cssd-f2000gbmp600/) (Phison controller)
 2. Western-Digital® (WD) to be confirmed
 
 #### SSD (SATA)
 1. [Crucial® MX500 Solid State Drive](https://h30434.www3.hp.com/t5/Desktop-Hardware-and-Upgrade-Questions/SSD-512-byte-sector/td-p/8347744)
+
+#### HDD's (SATA)
+1. Western-Digital (WD) HDD 'Red NAS' or 'Pro' (through `hdparm`) see "Convert HDD" chapter **6.** below.
 
 ### 4. Let's go!
 1. In case you want erase the whole 'nvme', use the command below. READ THE NOTES FIRST !!! 
