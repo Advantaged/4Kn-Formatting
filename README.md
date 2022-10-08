@@ -186,7 +186,7 @@ Device          Start       End   Sectors  Size Type
 ```
 5. These are the results (with swap = RAM x 1.5 = 96 GiB) of my 'nvme':
 ```
-disk -l /dev/nvme0n1
+fdisk -l /dev/nvme0n1
 Disk /dev/nvme0n1: 1,82 TiB, 2000398934016 bytes, 488378646 sectors
 Disk model: Force MP600                             
 Units: sectors of 1 * 4096 = 4096 bytes
@@ -232,7 +232,7 @@ modprobe btrfs
 ```
 - Format finally the OS-part. partitioned as `8300` Linux-fs as `btrfs`
 ```
-mkfs.btrfs /dev/nvme0n1p2
+mkfs.btrfs -f /dev/nvme0n1p2
 ```
 - Other information on ['btfrs'](https://www.tecmint.com/create-btrfs-filesystem-in-linux/)
 3. Mount options `btrfs` of OS-part on 'nvme' in `/etc/fstab`
