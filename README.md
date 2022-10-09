@@ -232,7 +232,7 @@ modprobe btrfs
 ```
 - Format finally the OS-part. partitioned as `8300` Linux-fs as `btrfs`
 ```
-mkfs.btrfs -f /dev/nvme0n1p2
+mkfs.btrfs -s 4096 -f /dev/nvme0n1p2
 ```
 - Other information on ['btfrs'](https://www.tecmint.com/create-btrfs-filesystem-in-linux/)
 3. Mount options `btrfs` of OS-part on 'nvme' in `/etc/fstab`
