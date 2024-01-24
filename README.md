@@ -114,6 +114,7 @@ dd if=/dev/zero of=/dev/nvme0n1 bs=4096 status=progress
   - b) exact dimensions (in KiB, MiB, GiB, etc.). 
   - c) commit/assign special parameters assuring/force 4KiB block-size (that other CLI- or Visual-Tools don't do). 
   - d) plan exactly in a text-file or script avoiding errors.
+  - e) choose `cgdisk /dev/nvme0n1` or `cfdisk /dev/nvme0n1` to use a terminal-graphical-version of the two best GPT-partitioning-programs.
 #### 5.1. Partition-table
 - **Note**: Check anyway you select the right drive with `lsblk` and/or `fdisk -l /dev/nvme0n1` or `sgdisk -p /dev/nvme0n1`
 1. Erase all partition-table information present on the drive:
