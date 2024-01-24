@@ -98,6 +98,7 @@ Units: sectors of 1 * 4096 = 4096 bytes
 Sector size (logical/physical): 4096 bytes / 4096 bytes
 I/O size (minimum/optimal): 4096 bytes / 4096 bytes
 ```
+- 2000398934016 bytes = 1863 GiB
 7. Recheck the speed!?
 - **Note**: The Linux-Kernel is (most probably) not yet aware of your made changes, use command-s <br/>
    `kpartx -u /dev/nvme0n1` or `partprobe -s` or reboot before issuing the command!
