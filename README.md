@@ -64,7 +64,7 @@ Success formatting namespace:1
 - **Note**: This tell the 'nvme'-controller to use the storage cells in '4KiB'-blocks. Of course, due change/switch of blocks-dimension are all data lost, hence is called 'formatting'.
 5. Recheck LBA-status/mode and possibility to 'format namespace':
 ```
-nvme id-ns /dev/nvme1n1 -H | grep LBA
+nvme id-ns /dev/nvme0n1 -H | grep LBA
 ```
 - output:
 ```
@@ -86,6 +86,16 @@ nvme --list
 Node                     Model                    Format  
 /dev/nvme0n1     Force MP600                      4 KiB +  0 B
 /dev/nvme1n1     Samsung SSD 970 PRO 512GB        512   B +  0 B
+```
+- This is the output of 4x nvme on a [nvme-HBA](https://www.aliexpress.com/item/1005004819139295.html?), with two such HBA you can build and install a 'True-NAS-Scale' (Debian-based on ZFS) with 8xnvme's, but, this's almost out of topic.
+```
+Node                  Model                                    Format         
+
+/dev/nvme0n1          Force MP600                              4 KiB +  0 B   
+/dev/nvme1n1          Force MP600                              4 KiB +  0 B   
+/dev/nvme2n1          Corsair MP600 PRO                        4 KiB +  0 B   
+/dev/nvme3n1          Corsair MP600 PRO                        4 KiB +  0 B   
+
 ```
 6. Detect all drive-parameter:
 ```
