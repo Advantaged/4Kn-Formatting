@@ -87,7 +87,7 @@ Node                     Model                    Format
 /dev/nvme0n1     Force MP600                      4 KiB +  0 B
 /dev/nvme1n1     Samsung SSD 970 PRO 512GB        512   B +  0 B
 ```
-- This is the output of 4x nvme on a [nvme-HBA](https://www.aliexpress.com/item/1005004819139295.html?), with two such HBA you can build and install a 'True-NAS-Scale' (Debian-based on ZFS) with 8xnvme's, but, this's almost out of topic.
+- This is the output of 4x nvme on a [nvme-HBA](https://www.aliexpress.com/item/1005004819139295.html?), with two such HBA's you can build and install a 'True-NAS-Scale' (Debian-based on ZFS) with 8xnvme's, but, this's almost out of topic.
 ```
 Node                  Model                                    Format         
 
