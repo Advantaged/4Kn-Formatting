@@ -6,7 +6,8 @@ Convert & Format drives with 4096 PBS/LBS (phisical/logical-block-size
 ### 1. Scope of instructions
 1. Run a 'nvme' drive with '4096' Byte sectors instead of '512' or '512B'.
 2. The throughput of a drive is given by 4KiB since more than one decade, & this not only by 'nvme' but also  by 'HDD' & 'SSD'.
-3. These instructions are for Linux users, whether they are also valid for Apple, BSD or Windows operating systems... please find it in the related forums. 
+3. Still, [using 4KN formatting](https://carlosfelic.io/misc/how-to-switch-your-nvme-ssd-to-4kn-advanced-format/) for newer devices ensure they are operating in their native space, without any need for conversion to happen at the controller.
+4. These instructions are for Linux users, whether they are also valid for Apple, BSD or Windows operating systems... please find it in the related forums. 
 
 ### 2. Basic requirements
 1. A 'nvme' drive supporting 4Kn directly or at least allow to switch between different (at least tween 512B & 4096) sector-sizes.
@@ -19,8 +20,8 @@ Convert & Format drives with 4096 PBS/LBS (phisical/logical-block-size
 ### 3. Suitable manufacturers and models (white-list only).
 
 #### NVMe's M.2 (PCIe)
-1. Corsair® serie 'MP 5xx' & ['MP Force 600'](https://forum.corsair.com/forums/topic/165279-mp600-2tb-cssd-f2000gbmp600/) (Phison controller)
-2. Western-Digital® (WD) to be confirmed
+1. Corsair® serie 'MP 5xx' & ['MP Force 600'](https://forum.corsair.com/forums/topic/165279-mp600-2tb-cssd-f2000gbmp600/) ('Phison' controller)
+2. Western-Digital® (WD) serie ['WD_BLACK SNxxx'](https://carlosfelic.io/misc/how-to-switch-your-nvme-ssd-to-4kn-advanced-format/) ('Phison' & 'Western Digital Black' controllers)
 
 #### SSD (SATA)
 1. [Crucial® MX500 Solid State Drive](https://h30434.www3.hp.com/t5/Desktop-Hardware-and-Upgrade-Questions/SSD-512-byte-sector/td-p/8347744)
