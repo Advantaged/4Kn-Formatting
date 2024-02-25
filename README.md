@@ -152,7 +152,7 @@ sgdisk -n 1:1M:+1G -t 1:ef00 -c 1:EFI-0003 /dev/nvme0n1
 sgdisk -n 2:0:+1860G -t 2:8300 -c 2:ARTIX-0003 /dev/nvme0n1
 ```
 3. SWAP-partition, in case you want one... reduce the size of OS-partition accordingly.
-- **SWAP-recommendation:** Don't use SWAP-Partition or -file, use ['ZRAM'](https://github.com/Advantaged/ZRAM) instead. You can install & configure it after first reboot & upgrade.
+- **SWAP-recommendation:** Don't use SWAP-Partition or -file, use ['ZRAM❗️'](https://github.com/Advantaged/ZRAM) instead. You can install & configure it after first reboot & upgrade.
 - **Note 2**: I set the SWAP-size to RAM-size multiplied 1.5, for 32 GB RAM is SWAP equal 48 GiB.
 ```
 sgdisk -n 3:0:+8G -t 3:8200 -c 3:SWAP-0003 /dev/nvme0n1
