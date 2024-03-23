@@ -147,19 +147,24 @@ blkdiscard /dev/nvme0n1
 ```
 sgdisk -n 1:1M:+1G -t 1:ef00 -c 1:EFI-0003 /dev/nvme0n1
 ```
-2. OS-partition
+2. OS-partition `etx4`
 ```
 sgdisk -n 2:0:+1860G -t 2:8300 -c 2:ARTIX-0003 /dev/nvme0n1
 ```
-3. SWAP-partition, in case you want one... reduce the size of OS-partition accordingly.
+3. OS-partition for `zfs` (optional), see [partitions-codes](https://github.com/Advantaged/4Kn-Formatting/blob/main/partition-codes.md)
+```
+sgdisk -n 2:0:+1860G -t 2:bf00 -c 2:ARTIX-0003 /dev/nvme0n1
+```
+4. SWAP-partition, in case you want one... reduce the size of OS-partition accordingly.
 - **SWAP-recommendation:** Don't use SWAP-Partition or -file, use ['ZRAM❗️'](https://github.com/Advantaged/ZRAM) instead. You can install & configure it after first reboot & upgrade.
 - **Note 2**: I set the SWAP-size to RAM-size multiplied 1.5, for 32 GB RAM is SWAP equal 48 GiB.
 ```
 sgdisk -n 3:0:+8G -t 3:8200 -c 3:SWAP-0003 /dev/nvme0n1
 ```
-- **Note 3**: EFI & SWAP don't need necessarily a label, hence omit in case `-c 1:EFI-0003` & `-c 3:SWAP-0003`.
-- **Note 4**: The first writable sector on '512' or '512B' drives is `2048`, the first writable sector on 4Kn is `256` equal 2048/8.
-4. Once you’ve created partition successfully, you need to update the partition table changes to kernel for that let us run the partprobe command to add the disk information to kernel and after that list the partition as shown below.
+- **Note 3**: `-c 1:EFI-0003` set the partition-label only!
+- **Note 4**: EFI & SWAP don't need necessarily a label, hence omit in case `-c 1:EFI-0003` & `-c 3:SWAP-0003`.
+- **Note 5**: The first writable sector on '512' or '512B' drives is `2048`, the first writable sector on 4Kn is `256` equal 2048/8.
+5. Once you’ve created partition successfully, you need to update the partition table changes to kernel for that let us run the partprobe command to add the disk information to kernel and after that list the partition as shown below.
 ```
 partprobe -s
 ```
@@ -172,13 +177,15 @@ partprobe -s
    `kpartx -u /dev/nvme0n1` or `partprobe -s` or reboot.
 1. Formatting EFI-part in 4Kn/4KiB
 ```
-mkfs.vfat -F32 -s 2 -S 4096 -v /dev/nvme0n1p1
+mkfs.vfat -F32 -s 2 -S 4096 -n EFI -v /dev/nvme0n1p1
 ```
+-  here we define the file-system-name or label with the option `-n EFI` , see `mkfs.vfat --help` .
 2. Formatting OS-part in 4Kn/4KiB
 - **Note 2**: In case you want to format in `btrfs`, jump to point **5.4.2**
 ```
-mkfs.ext4 -F -b 4096 -F /dev/nvme0n1p2
+mkfs.ext4 -F -b 4096 -L ARTIX-0003 -F /dev/nvme0n1p2
 ```
+-  here we define the file-system-name or label with the option `-L ARTIX-0003` , see `mkfs.ext4 --help` .
 3. Formatting SWAP-part in 4Kn/4KiB
 ```
 mkswap -f -p 4096 /dev/nvme0n1p3
