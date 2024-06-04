@@ -297,7 +297,7 @@ sg_format --format --size=512 /dev/sdb
 ```
 * **Note:**
    * It takes some minutes to format the SSD in this way.
-   * Some Manufacturer offer Win-program to manage LBS od SSD.
+   * Some Manufacturer offer Win-program to manage LBS of SSD, see chapter **3.**.
 
 ### 7. Convert/switch an HDD to 4Kn
 - Following these threads: [Check/Switch LBA](https://unix.stackexchange.com/questions/562571/switching-hdd-sector-size-to-4096-bytes),
