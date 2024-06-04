@@ -24,10 +24,10 @@ Convert & Format drives with 4096 PBS/LBS (phisical/logical-block-size
 2. Western-Digital® (WD) serie ['WD_BLACK SNxxx'](https://carlosfelic.io/misc/how-to-switch-your-nvme-ssd-to-4kn-advanced-format/) ('Phison' & 'Western Digital Black' controllers)
 
 #### SSD (SATA)
-1. [Crucial® MX500 Solid State Drive](https://h30434.www3.hp.com/t5/Desktop-Hardware-and-Upgrade-Questions/SSD-512-byte-sector/td-p/8347744)
+1. [Crucial® MX500 Solid State Drive](https://h30434.www3.hp.com/t5/Desktop-Hardware-and-Upgrade-Questions/SSD-512-byte-sector/td-p/8347744) through `sg_format` see convert SSD chapter **6.** below.
 
 #### HDD's (SATA)
-1. Western-Digital (WD) HDD 'Red NAS' or 'Pro' (through `hdparm`) see "Convert HDD" chapter **6.** below.
+1. Western-Digital (WD) HDD 'Red NAS' or 'Pro' (through `hdparm`) see "Convert HDD" chapter **7.** below.
 
 ### 4. Let's go!
 1. In case you want erase the whole 'nvme', use the command below. READ THE NOTES FIRST !!! 
@@ -278,7 +278,7 @@ UUID=<uuid-of-dev-nvme0n1p2>  /home noatime,space_cache=v2,compress=zstd,ssd,dis
 ```
 pacman -S --needed --noconfirm sg3_utils
 ```
-2. Show details of a SSD, e.g. `sdb`:
+2. Show details of a SSD, e.g. `sdb` with `fdisk -l` or fresh installed `sg_`:
 
 ```
 sg_readcap -l /dev/sdb
