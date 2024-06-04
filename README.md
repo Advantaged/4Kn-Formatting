@@ -24,7 +24,9 @@ Convert & Format drives with 4096 PBS/LBS (phisical/logical-block-size
 2. Western-Digital® (WD) serie ['WD_BLACK SNxxx'](https://carlosfelic.io/misc/how-to-switch-your-nvme-ssd-to-4kn-advanced-format/) ('Phison' & 'Western Digital Black' controllers)
 
 #### SSD (SATA)
-1. [Crucial® MX500 Solid State Drive](https://h30434.www3.hp.com/t5/Desktop-Hardware-and-Upgrade-Questions/SSD-512-byte-sector/td-p/8347744) through `sg_format` see convert SSD chapter **6.** below.
+1. Crucial® offer a Win®-app you can [download here](https://www.crucial.com/support/ssd-support), the instruction can be downloaded [here](https://www.micron.com/content/dam/micron/global/public/products/software/storage-executive-software/storageexecutive-user-guide-en.pdf) & concern all SSD with Micron® controller.
+2. For industrial standard SSD you can use `sg_format` from `sg3_utils` see convert SSD chapter **6.** below.
+3. Other manufacturer offer similar Win®-apps too.
 
 #### HDD's (SATA)
 1. Western-Digital (WD) HDD 'Red NAS' or 'Pro' (through `hdparm`) see "Convert HDD" chapter **7.** below.
