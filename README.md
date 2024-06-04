@@ -278,12 +278,16 @@ UUID=<uuid-of-dev-nvme0n1p2>  /home noatime,space_cache=v2,compress=zstd,ssd,dis
 1. Install program:
 
 ```
-pacman -S --needed --noconfirm sg3_utils
+pacman -S --needed --noconfirm sg3_utils hdparm
 ```
-2. Show details of a SSD, e.g. `sdb` with `fdisk -l` or fresh installed `sg_`:
+2. Show details of a SSD, e.g. `sdb` with `fdisk -l` (see above) or fresh installed `sg_` or `hdparm`:
 
 ```
 sg_readcap -l /dev/sdb
+```
+or
+```
+hdparm -I /dev/sdb | grep 'Sector size:'
 ```
 
 3. Format logicaal block size to 4K=4096:
@@ -304,7 +308,7 @@ sg_format --format --size=512 /dev/sdb
   - c) It works only if the `physical_block_size` (PBS, setled by manufacturer) is already 4Kn, it changes only the LBS.
 1. Install program:
 ```
-pacman -S --needed --noconfirm hdparm
+pacman -S --needed --noconfirm hdparm sg3_utils
 ```
 2. Individuate drive with `lsblk` command.
 3. Detect "Logical  Sector size" and "Physical Sector size"
