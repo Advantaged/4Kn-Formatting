@@ -42,7 +42,7 @@ dd if=/dev/zero of=/dev/nvme0n1 bs=4096 status=progress
 ```
 2. Install missing programs if needed:
 ```
-pacman -S --needed nvme-cli gptfdisk multipath-tools
+pacman -S --needed --noconfirm nvme-cli gptfdisk multipath-tools
 ```
 3. Check LBA-status/mode and possibility to 'format namespace':
 ```
@@ -245,7 +245,7 @@ sgdisk -c 3:SWAP-0003 /dev/nvme0n1
 2. Format OS-part to [btrfs](https://wiki.archlinux.org/title/btrfs)
 - Install in case `btrfs-progs`. In most of the today’s latest Linux distributions, btrfs package comes as pre-installed. If not, install btrfs package using the following command. 
 ```
-pacman -S btrfs-progs
+pacman -S --needed --noconfirm btrfs-progs
 ```
 - Enable `btrfs` in the Kernel. After btrfs package has been installed on the system, now we need to enable the Kernel module for btrfs using below command.
 ```
@@ -270,16 +270,39 @@ UUID=<uuid-of-dev-nvme0n1p2>  /home noatime,space_cache=v2,compress=zstd,ssd,dis
 3 aur/timeshift 22.06.5-1 [+308 ~15.72]
     A system restore utility for Linux
 ```
-### 6. Convert/switch an HDD to 4Kn
+### 6. Convert/switch an SSD to 4Kn
+- Following this [Server-Forum](https://forums.servethehome.com/index.php?threads/how-to-reformat-hdd-ssd-to-512b-sector-size.4968/page-20) & this Video [Art of Server](https://www.youtube.com/watch?v=DAaTfv96V9w) we need an additional package to (`sg3_utils`) do this.
+
+1. Install program:
+
+```
+pacman -S --needed --noconfirm sg3_utils
+```
+2. Show details of a SSD, e.g. `sdb`:
+
+```
+sg_readcap -l /dev/sdb
+```
+
+3. Format logicaal block size to 4K=4096:
+
+```
+sg_format --format --size=512 /dev/sdb
+```
+* **Note:**
+   * It takes some minutes to format the SSD in this way.
+   * Some Manufacturer offer Win-program to manage LBS od SSD.
+
+### 7. Convert/switch an HDD to 4Kn
 - Following these threads: [Check/Switch LBA](https://unix.stackexchange.com/questions/562571/switching-hdd-sector-size-to-4096-bytes),
 [Arch-Linux](https://wiki.archlinux.org/index.php/Advanced_Format), [WD](https://documents.westerndigital.com/content/dam/doc-library/en_us/assets/public/western-digital/collateral/white-paper/white-paper-advanced-format.pdf), [HGST](https://documents.westerndigital.com/content/dam/doc-library/en_us/assets/public/western-digital/collateral/tech-brief/tech-brief-advanced-format.pdf).
 - **Note-s**:
   - a) This conversion can cause unexpected results. Use it only if you know what you are doing.
   - b) This action destroy/delete all data inside the HDD, hence backup your data before beginning.
   - c) It works only if the `physical_block_size` (PBS, setled by manufacturer) is already 4Kn, it changes only the LBS.
-1. Install programm:
+1. Install program:
 ```
-pacman -S hdparm
+pacman -S --needed --noconfirm hdparm
 ```
 2. Individuate drive with `lsblk` command.
 3. Detect "Logical  Sector size" and "Physical Sector size"
