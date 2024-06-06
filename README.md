@@ -293,7 +293,7 @@ hdparm -I /dev/sdb | grep 'Sector size:'
 3. Format logicaal block size to 4K=4096:
 
 ```
-sg_format --format --size=512 /dev/sdb
+sg_format --format --size=4096 /dev/sdb
 ```
 * **Note:**
    * It takes some minutes to format the SSD in this way.
