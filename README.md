@@ -130,8 +130,9 @@ dd if=/dev/zero of=/dev/nvme0n1 bs=4096 status=progress
   - d) plan exactly in a text-file or script avoiding errors.
   - e) choose `cgdisk /dev/nvme0n1` or `cfdisk /dev/nvme0n1` or `gdisk /dev/nvme0n1` to use a terminal-graphical-version of the three best GPT-partitioning-programs.
 #### 5.1. Partition-table
-- **Note**: Check anyway you select the right drive with `lsblk` and/or `fdisk -l /dev/nvme0n1` or `sgdisk -p /dev/nvme0n1` or `gdisk -l /dev/nvme0n1`
-1. Erase all partition-table information present on the drive:
+- **Note**: Check anyway you select the right drive with `lsblk` and/or `blkid` or `fdisk -l /dev/nvme0n1` or `sgdisk -p /dev/nvme0n1` .
+
+1. Erase all partition-table information (Linux-RAID, BTRFS, ZFS or other simple partitions) present on the drive:
 ```
 sgdisk -Z /dev/nvme0n1
 ```
@@ -144,70 +145,73 @@ sgdisk -o /dev/nvme0n1
 blkdiscard /dev/nvme0n1
 ```
 #### 5.2. Partitioning
-- **Note 1**: Assure you use full KiB, MiB, GiB and not KB, MB, GB. Use besides an uniformed measure, on my side I prefer GiB. Calculate in advance the partitions sizes, e.g. from command `fdisk -l /dev/nvme0n1` I know my drive contain '2000398934016 bytes' divided by '1024x1024x1024' (this is equal to 1 GiB) have I a total of 1863 GiB.
-1. EFI-partition
-```
-sgdisk -n 1:1M:+1G -t 1:ef00 -c 1:EFI-0003 /dev/nvme0n1
-```
-2. OS-partition `etx4`
-```
-sgdisk -n 2:0:+1860G -t 2:8300 -c 2:ARTIX-0003 /dev/nvme0n1
-```
-3. OS-partition for `zfs` (optional), see [partitions-codes](https://github.com/Advantaged/4Kn-Formatting/blob/main/partition-codes.md)
-```
-sgdisk -n 2:0:+1860G -t 2:bf00 -c 2:ARTIX-0003 /dev/nvme0n1
-```
-4. SWAP-partition, in case you want one... reduce the size of OS-partition accordingly.
-- **SWAP-recommendation:** Don't use SWAP-Partition or -file, use ['ZRAM❗️'](https://github.com/Advantaged/ZRAM) instead. You can install & configure it after first reboot & upgrade.
-- **Note 2**: I set the SWAP-size to RAM-size multiplied 1.5, for 32 GB RAM is SWAP equal 48 GiB.
-```
-sgdisk -n 3:0:+8G -t 3:8200 -c 3:SWAP-0003 /dev/nvme0n1
-```
-- **Note 3**: `-c 1:EFI-0003` set the partition-label only!
-- **Note 4**: EFI & SWAP don't need necessarily a label, hence omit in case `-c 1:EFI-0003` & `-c 3:SWAP-0003`.
-- **Note 5**: The first writable sector on '512' or '512B' drives is `2048`, the first writable sector on 4Kn is `256` equal 2048/8.
-5. Once you’ve created partition successfully, you need to update the partition table changes to kernel for that let us run the partprobe command to add the disk information to kernel and after that list the partition as shown below.
-```
-partprobe -s
-```
-- Other information and man-page of 'sgdisk`
-  - [SGDISK](https://www.rodsbooks.com/gdisk/sgdisk-walkthrough.html)
-  - [SGDISK Man-Page](https://man.archlinux.org/man/sgdisk.8.en)
+- **Note 1**: Assure you use full KiB, MiB, GiB and not KB, MB, GB. Use besides an uniformed measure, on my side I prefer GiB. Calculate in advance the partitions sizes, e.g. from command `fdisk -l /dev/nvme0n1` I know my drive contain '2000398934016 bytes' divided by '1024x1024x1024' (this is equal to 1 GiB) have I a total of 1863 GiB. 
+
+1. Common Partitions-Types / Overview 
+* **Note 2**: Many Linux-Distros use today (already) 2 GiB for the EFI-Partition, the maximum is 4 GiB & this do i too. For cloning a partition or for replace DC (Data-Carrier) in a RAID or Partition an Intel-Optane for [ZIL & LOG in True-NAS](https://www.truenas.com/docs/references/zilandslog/) is convenient to assign the ROOT-Partition (or others partitions) a certain or fix amount of Storage-Quantity/-Place. See also [partitions-codes](https://github.com/Advantaged/4Kn-Formatting/blob/main/partition-codes.md)
+* EFI:
+`   sgdisk -n 1:1M:+4G -t 1:ef00 -c 1:EFI-0003 /dev/nvme0n1`
+* EXT4 [ArchLinux-Wiki / UEFI-GPT](https://wiki.archlinux.org/title/partitioning):
+  `   sgdisk -n 2:0:+1850G -t 2:8304 -c 2:ARCO-D /dev/nvme0n1`
+* BTRFS (following [Stackexchange](https://unix.stackexchange.com/questions/617918/what-type-of-partition-guid-should-i-use-for-linux-with-btrfs), [Github](https://github.com/util-linux/util-linux/issues/1175) & [Arch-Wiki](https://wiki.archlinux.org/title/GPT_fdisk):
+`   sgdisk -n 2:0:+1850G -t 2:8304 -c 2:ARCO-D /dev/nvme0n1`
+* ZFS:
+`   sgdisk -n 2:0:+1850G -t 2:bf00 -c 2:CACHYOS-Z /dev/nvme0n1`
+* SWAP:
+`   sgdisk -n 3:0:+8G -t 3:8200 -c 3:SWAP-0003 /dev/nvme0n1`
+
+* **Note-s 3**
+   * SWAP-partition, in case you want one... reduce the size of OS-partition accordingly.
+   * SWAP-recommendation: Don't use SWAP-Partition or -file, use ['ZRAM❗️'](https://github.com/Advantaged/ZRAM) instead. You can install & configure it after first reboot & upgrade.
+   * SWAP-Size: I set the SWAP-size to RAM-size multiplied 1.5, for 32 GB RAM is SWAP equal 48 GiB.
+   * Partition-Label: `sgdisk -c 1:EFI-0003` set the partition-label only!
+   * Labels for EFI & SWAP: EFI & SWAP don't need necessarily a label, hence omit in case `-c 1:EFI-0003` & `-c 3:SWAP-0003`.
+   * First used Sector: The first writable sector on '512' DC is `2048`, the first writable sector on 4Kn is `256` equal 2048/8.
+   
+* Once you’ve created partition successfully, you need to update the partition table changes to kernel for that let us run the partprobe command to add the disk information to kernel and after that list the partition as shown below.
+`   partprobe -s`
+
+* Other information and man-page of 'sgdisk`
+   * [SGDISK](https://www.rodsbooks.com/gdisk/sgdisk-walkthrough.html)
+   * [SGDISK Man-Page](https://man.archlinux.org/man/sgdisk.8.en)
+   * SGDISK is for scripting, you can use [CGDISK](https://man.archlinux.org/man/cgdisk.8.en) or [CFDISK](https://linux.die.net/man/8/cfdisk) instead.
+   * CGDISK usage: `cgdisk /dev/nvme0n1`
 
 #### 5.3. Formatting
 - **Note 1**: In case you get error messages by formatting... again, the Kernel not yet recognized your changes. Use command-s:<br/>
    `kpartx -u /dev/nvme0n1` or `partprobe -s` or reboot.
-1. Formatting EFI-part in 4Kn/4KiB
+1. Formatting EFI-partition in 4Kn/4KiB
 ```
 mkfs.vfat -F32 -s 2 -S 4096 -n EFI -v /dev/nvme0n1p1
 ```
--  here we define the file-system-name or label with the option `-n EFI` , see `mkfs.vfat --help` .
+-  here we define the file-system-name or label within the option `-n EFI` , see `mkfs.vfat --help` .
+-  This Volume-Label don't appear in your "File-Manager" but, e.g., permit "rEFInd" to find & use the right logo for your OS (Opearatings-System).
 2. Formatting OS-part in 4Kn/4KiB
 - **Note 2**: In case you want to format in `btrfs`, jump to point **5.4.2**
 ```
 mkfs.ext4 -F -b 4096 -L ARTIX-0003 -F /dev/nvme0n1p2
 ```
--  here we define the file-system-name or label with the option `-L ARTIX-0003` , see `mkfs.ext4 --help` .
+-  here we define the file-system-name or volume-label within the option `-L ARTIX-0003` , see `mkfs.ext4 --help` .
 3. Formatting SWAP-part in 4Kn/4KiB
 ```
 mkswap -f -p 4096 /dev/nvme0n1p3
 ```
-4. These are the results (without Swap) of my 'nvme':
+4. These are the results (without Swap) of my 'nvme' with Arcolinux-D:
 ```
 fdisk -l /dev/nvme0n1
-Disk /dev/nvme0n1: 1,82 TiB, 2000398934016 bytes, 488378646 sectors
+Disk /dev/nvme0n1: 1.82 TiB, 2000398934016 bytes, 488378646 sectors
 Disk model: Force MP600                             
 Units: sectors of 1 * 4096 = 4096 bytes
 Sector size (logical/physical): 4096 bytes / 4096 bytes
 I/O size (minimum/optimal): 4096 bytes / 4096 bytes
 Disklabel type: gpt
-Disk identifier: AC509C30-1A7B-4E47-BBEA-52D88EF8176B
+Disk identifier: 00B33A78-780C-42E1-ABB1-CB5E038E8B0E
 
-Device          Start       End   Sectors  Size Type
-/dev/nvme0n1p1    256    262399    262144    1G EFI System
-/dev/nvme0n1p2 262400 487850239 487587840  1,8T Linux filesystem
+Device           Start       End   Sectors  Size Type
+/dev/nvme0n1p1     256   1048831   1048576    4G EFI System
+/dev/nvme0n1p2 1048832 486015231 484966400  1.8T Linux filesystem
 ```
-5. These are the results (with swap = RAM x 1.5 = 96 GiB) of my 'nvme':
+5. These are the results (with swap = RAM x 1.5 = 96 GiB) of my 'nvme' with Artix-Linux-Plasma:
 ```
 fdisk -l /dev/nvme0n1
 Disk /dev/nvme0n1: 1,82 TiB, 2000398934016 bytes, 488378646 sectors
@@ -237,14 +241,28 @@ Device             Start       End   Sectors  Size Type
   - b) 2. Ext4: We have to force twice this operation '-F' in order to take effect.
   - c) 3. Swap: Normally the 'page-size' with the option `-f -p 4096` [is not necessary](https://www.computerhope.com/unix/mkswap.htm)
 #### 5.4. Additional steps in case of need
-1. Labelling partitions even after formatting:
+1. Labelling Partitions even after partitioning:
 ```
 sgdisk -c 1:EFI-0003 /dev/nvme0n1
 sgdisk -c 2:ARTIX-0003 /dev/nvme0n1
 sgdisk -c 3:SWAP-0003 /dev/nvme0n1
 ```
-- **Note**: EFI & SWAP normally don't need a label at all.
-2. Format OS-part to [btrfs](https://wiki.archlinux.org/title/btrfs)
+- **Note**: EFI & SWAP normally don't need a partition-label at all, but the ROOT-Partition-label is very important, e.g. for command: `blkid` .
+
+2. Labelling Volume even after formatting:
+* [VFAT](https://man7.org/linux/man-pages/man8/mkfs.vfat.8.html):
+`   mkfs.vfat -n EFI -v /dev/nvme0n1p1`
+* [EXT4](https://linux.die.net/man/8/mkfs.ext4):
+  `   mkfs.ext4 -L ARTIX-0003 -F /dev/nvme0n1p2`
+* BTRFS (following [Stackexchange](https://unix.stackexchange.com/questions/617918/what-type-of-partition-guid-should-i-use-for-linux-with-btrfs), [Github](https://github.com/util-linux/util-linux/issues/1175) & [Arch-Wiki](https://wiki.archlinux.org/title/GPT_fdisk):
+`   sgdisk -n 2:0:+1850G -t 2:8304 -c 2:ARCO-D /dev/nvme0n1`
+* ZFS:
+`   sgdisk -n 2:0:+1850G -t 2:bf00 -c 2:CACHYOS-Z /dev/nvme0n1`
+* [SWAP](https://man7.org/linux/man-pages/man8/mkswap.8.html):
+`   sgdisk -n 3:0:+8G -t 3:8200 -c 3:SWAP-0003 /dev/nvme0n1`
+  
+  
+3. Format OS-part to [btrfs](https://wiki.archlinux.org/title/btrfs)
 - Install in case `btrfs-progs`. In most of the today’s latest Linux distributions, btrfs package comes as pre-installed. If not, install btrfs package using the following command. 
 ```
 pacman -S --needed --noconfirm btrfs-progs
@@ -258,12 +276,12 @@ modprobe btrfs
 mkfs.btrfs -s 4096 -f /dev/nvme0n1p2
 ```
 - Other information on ['btfrs'](https://www.tecmint.com/create-btrfs-filesystem-in-linux/)
-3. Mount options `btrfs` of OS-part on 'nvme' in `/etc/fstab`
+4. Mount options `btrfs` of OS-part on 'nvme' in `/etc/fstab`
 ```
 UUID=<uuid-of-dev-nvme0n1p2>  / noatime,space_cache=v2,compress=zstd,ssd,discard=async,subvol=@ 0 0
 UUID=<uuid-of-dev-nvme0n1p2>  /home noatime,space_cache=v2,compress=zstd,ssd,discard=async,subvol=@home 0 0
 ```
-4. Backup & restore with `btrfs`, for this install `timeshift` & `timeshift-autosnap`. 
+5. Backup & restore with `btrfs`, for this install `timeshift` & `timeshift-autosnap`. 
 ```
 5 aur/timeshift-bin 22.06.1-1 [+11 ~1.91]
     A system restore utility for Linux
