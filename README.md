@@ -190,7 +190,7 @@ blkdiscard -f /dev/nvme0n1
    * Labels for EFI & SWAP: EFI & SWAP don't need necessarily a label, hence omit in case `-c 1:EFI-0003` & `-c 3:SWAP-0003`.
    * First used Sector: The first writable sector on '512' DC is `2048`, the first writable sector on 4Kn is `256` equal 2048/8.
    
-* Once you’ve created partition successfully, you need to update the partition-table-changes to kernel, for that let us run the `partprobe -s` command to add the disk information to kernel and after that list the new partition.
+* Once you’ve created partition successfully, you need to update the partition-table-changes to kernel, for that let us run the `partprobe -s` command to add the disk information to kernel and after that, list the new partition.
 
 
 * Other information and man-page of 'sgdisk`
