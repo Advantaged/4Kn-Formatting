@@ -290,15 +290,24 @@ sgdisk -c 3:SWAP-0003 /dev/nvme0n1
 
 2. Labelling Volume even after formatting:
 * [VFAT](https://man7.org/linux/man-pages/man8/mkfs.vfat.8.html):
+
 `   mkfs.vfat -n EFI -v /dev/nvme0n1p1`
+
 * [EXT4](https://www.cyberciti.biz/faq/linux-modify-partition-labels-command-to-change-diskname/#:~:text=You%20need%20to%20use%20the,partition%20label%20for%20security%20reasons.):
+
   `   e2label /dev/nvme0n1p2 ARCOL-D`
+
 * [SWAP-Label](https://man7.org/linux/man-pages/man8/swaplabel.8.html):
+
 `   swaplabel -L LAZY-SW /dev/nvme0n1p3`
+
 * [BTRFS](https://man7.org/linux/man-pages/man8/mkfs.btrfs.8.html):
-   * [By unmounted filesystem](https://askubuntu.com/questions/236681/filesystem-label-rename) `btrfs filesystem label <device> <newlabel>` : 
+   * [By unmounted filesystem](https://askubuntu.com/questions/236681/filesystem-label-rename) `btrfs filesystem label <device> <newlabel>` :
+
 `   btrfs filesystem ARCOL-D /dev/nvme0n1p2 ARCOL-L`
+
 * [ZFS](https://docs.oracle.com/cd/E19253-01/819-5461/gaypf/) `zfs rename [actual name] [new name]`:
+
 `   zfs rename zwol1 tank1`
   
 #### 5.5 Format BTRFS  
