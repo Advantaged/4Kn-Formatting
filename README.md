@@ -30,7 +30,7 @@ Convert & Format drives with 4096 PBS/LBS (phisical/logical-block-size), LBS is 
 
 #### 3.2. SSD (SATA)
 1. For industrial standard SSDs you can use `sg_format` from `sg3_utils` see "Convert SSD" chapter **6.** below.
-2. Some manufacturer offer similar Win®-apps too. Those apps are mainlyy for "Consumer-DC".
+2. Some manufacturer offer similar Win®-apps too. Those apps are mainly for "Consumer-DC".
 
 #### 3.3. HDD's (SATA)
 1. For industrial standard HDDs you can use `hdparm` command, see "Convert HDD" chapter **7.** below.
