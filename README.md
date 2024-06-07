@@ -171,7 +171,7 @@ blkdiscard -f /dev/nvme0n1
 `   sgdisk -n 1:1M:+4G -t 1:ef00 -c 1:EFI-0003 /dev/nvme0n1`
 * EXT4 [ArchLinux-Wiki / UEFI-GPT](https://wiki.archlinux.org/title/partitioning):
 
-  `   sgdisk -n 2:0:+1850G -t 2:8304 -c 2:ARCO-D /dev/nvme0n1`
+`   sgdisk -n 2:0:+1850G -t 2:8304 -c 2:ARCO-D /dev/nvme0n1`
 * BTRFS (following [Stackexchange](https://unix.stackexchange.com/questions/617918/what-type-of-partition-guid-should-i-use-for-linux-with-btrfs), [Github](https://github.com/util-linux/util-linux/issues/1175) & [Arch-Wiki](https://wiki.archlinux.org/title/GPT_fdisk):
   
 `   sgdisk -n 2:0:+1850G -t 2:8304 -c 2:ARCO-D /dev/nvme0n1`
