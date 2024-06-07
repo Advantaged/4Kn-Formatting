@@ -41,7 +41,7 @@ Convert & Format drives with 4096 PBS/LBS (phisical/logical-block-size), LBS is 
 1. Linux-es/Unix-oides OOTB (out of the box):
    * CachyOS: Archlinux-based, rolling-release, also using perfectly `btrfs` & `zfs` file-systems, for Desktop & Gaming.
    * Proxmox: Debian-Based, point-release, also using `btrfs` & `zfs` file-systems, for Server, hosting 'OPNsense', 'pfSense' (Firewall, Networks-Management), & other OSs & Server-applications.
-   * True-NAS-Scale: Debian-based, point-release, also use `zfs` file-system, as the name already say… this's a open source & free of charge NAS.
+   * True-NAS-Scale: Debian-based, point-release, also use `zfs` file-system, as the name already say… this's a open source & free of charge NAS-OS.
    * Some other Linux-es with Live-ISO-GUI &|| CLI, need in addition to be partitioned & formatted in advance. Forall the EFI (`vfat`) and ROOT is using `ext4` &|| `btrfs` .
    * BSD-based-OSs: all point-release, using `udf` & `zfs` file-systems, used on SOC, Desktops & Servers. 
 2. Windows®: Yes, also Win (10/11) 'understand' (meanwhile) 4K & 4Kn OOTB. For Servers & Desktops, there you havent the 'opportunity' to make partition & formatting by youself. Conversion of DC to 4Kn over manufacturer-win-apps or each Linux-Live-ISOs like… CachyOS, ArcolinuxD, Artix-Linux-Plasma, Bluestar-Linux, but also Kubunt or each other Linux-ISO with GUI-Installer.
