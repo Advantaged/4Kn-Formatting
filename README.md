@@ -1,44 +1,61 @@
 # 4Kn-Formatting
-Convert & Format drives with 4096 PBS/LBS (phisical/logical-block-size
+Convert & Format drives with 4096 PBS/LBS (phisical/logical-block-size), LBS is also called LBA.
 
-- **Note**: Some manufacturer use '4096' as 'physical_block_size' but '512e' or '512' as 'logical_block_size' ([see here the differences](https://en.wikipedia.org/wiki/Advanced_Format#Overview)) as well the [Arch-Linux Wiki](https://wiki.archlinux.org/title/Advanced_Format#Setting_native_sector_size). Well, some manufacturer allow to modify/change the LBS (for-all by 'NVMe') and some don't. Some other use '4096n / 4Kn' (it's mean native) both as PBS and LBS (for-all by very big HDD's).
+## A comprehensive minimalistic compendium for newbies & proofs, about proper Data-Carrier-Handling of UEFI-GPT 'Disks' (DC) for using them not only with Linux but also BSD, MAC & WIN.
+
+- **General Note**: Some manufacturer use '4096' as 'physical_block_size' (PBS) but '512e' or '512' as 'logical_block_size' LBS/LBA) ([see here the differences](https://en.wikipedia.org/wiki/Advanced_Format#Overview)) as well the [Arch-Linux Wiki](https://wiki.archlinux.org/title/Advanced_Format#Setting_native_sector_size). Well, some manufacturer allow to modify/change the LBS (for-all by 'NVMe') and some don't. Some other use '4096n / 4Kn' (it's mean native) both as PBS and LBS (for-all by very big HDD's). The PBS is NOT changeable❗️
 
 ### 1. Scope of instructions
 1. Run a 'nvme' drive with '4096' Byte sectors instead of '512' or '512B'.
-2. The throughput of a drive is given by 4KiB since more than one decade, & this not only by 'nvme' but also  by 'HDD' & 'SSD'.
+2. The throughput of a drive is given by Manufacturer in 4KiB since more than two decade, & this not only by 'nvme' but also  by 'HDD' & 'SSD'.
 3. Still, [using 4KN formatting](https://carlosfelic.io/misc/how-to-switch-your-nvme-ssd-to-4kn-advanced-format/) for newer devices ensure they are operating in their native space, without any need for conversion to happen at the controller.
-4. These instructions are for Linux users, whether they are also valid for Apple, BSD or Windows operating systems... please find it in the related forums. 
+4. These instructions are for Linux users, whether they are also valid for Apple, BSD or Windows operating systems… please find it in the related forums.
+5. Preferably buy 4Kn-DC (Data-Carrier) also called Enterprise-DC like HGST (HDD) or with simple Linux-Commands (`nvme` ,  `sg_format` , `hdparm`) convertible DC. 
 
 ### 2. Basic requirements
-1. A 'nvme' drive supporting 4Kn directly or at least allow to switch between different (at least tween 512B & 4096) sector-sizes.
-2. Manufacturer supporting switching are 'Corsair' (since at least model 'MP5xx') and 'WD' (Western Digital). The latter has not been checked all models/series, please contact me to make a complete list. Please commit all manufacturer, series and model you was able to convert, thanks.
+1. A 'nvme' drive supporting 4Kn directly or at least allow to switch between different (at least tween 512 & 4096) logical-sector-sizes (LBS or LBA).
+2. Manufacturer supporting switching are 'Corsair' (since at least model 'MP5xx' = PCI-e 3, let say a long tradition). The latter has not been checked all models/series, please contact me to make a complete list. Please commit all manufacturer, series and model you was able to convert, thanks.
 3. The increased throughput is assured by "PCI-e', this mean 'nvme' in 'M.2' design.
 4. A live installation-usb with a Linux-Distro (e.g. [Artix-Linux-Plasma](https://artixlinux.org/download.php)) or a computer that already has a Linux on it.
 5. Possibility to install additional programs like `nvme-cli`, `gptfdisk`, `multipath-tools`
-6. Assure you can act as 'Admin/Root' with/over `sudo`, `sudo -s` or `su -s`   
+6. Assure you can act as 'Admin/Root' with/over `sudo` , `sudo -s` , `sudo -i` or `su -s`   
 
 ### 3. Suitable manufacturers and models (white-list only).
 
-#### NVMe's M.2 (PCIe)
-1. Corsair® serie 'MP 5xx' & ['MP Force 600'](https://forum.corsair.com/forums/topic/165279-mp600-2tb-cssd-f2000gbmp600/) ('Phison' controller)
-2. Western-Digital® (WD) serie ['WD_BLACK SNxxx'](https://carlosfelic.io/misc/how-to-switch-your-nvme-ssd-to-4kn-advanced-format/) ('Phison' & 'Western Digital Black' controllers)
+* Please contributing to enhanced/fulfill this Whitelist & hence help other people to make the right choice of Data-Carrier (DC).
 
-#### SSD (SATA)
-1. Crucial® offer a Win®-app you can [download here](https://www.crucial.com/support/ssd-support), the instruction can be downloaded [here](https://www.micron.com/content/dam/micron/global/public/products/software/storage-executive-software/storageexecutive-user-guide-en.pdf) (see page 23) & concern all SSD with Micron® controller.
-2. For industrial standard SSD you can use `sg_format` from `sg3_utils` see convert SSD chapter **6.** below.
-3. Other manufacturer offer similar Win®-apps too.
+#### 3.1. NVMe's M.2 (PCIe)
+1. Corsair® serie 'MP 5xx' & ['MP Force 600'](https://forum.corsair.com/forums/topic/165279-mp600-2tb-cssd-f2000gbmp600/) ('Phison' controller) using `nvme` command.
+2. Western-Digital® (WD) serie ['WD_BLACK SNxxx'](https://carlosfelic.io/misc/how-to-switch-your-nvme-ssd-to-4kn-advanced-format/) ('Phison' & 'Western Digital Black' controllers) over/trough `nvme` command.
 
-#### HDD's (SATA)
-1. Western-Digital (WD) HDD 'Red NAS' or 'Pro' (through `hdparm`) see "Convert HDD" chapter **7.** below.
+#### 3.2. SSD (SATA)
+1. For industrial standard SSDs you can use `sg_format` from `sg3_utils` see "Convert SSD" chapter **6.** below.
+2. Some manufacturer offer similar Win®-apps too. Those apps are mainlyy for "Consumer-DC".
+
+#### 3.3. HDD's (SATA)
+1. For industrial standard HDDs you can use `hdparm` command, see "Convert HDD" chapter **7.** below.
+2. HGST appartain to Western-Digital (WD) an offer already 4Kn HDDs.
+3. Some manufacturer offer similar Win®-apps too. Those apps are mainlyy for "Consumer-DC".
+
+#### 3.4. Suitable Operatings-System-s (OS)
+1. Linux-es/Unix-oides OOTB (out of the box):
+   * CachyOS: Archlinux-based, rolling-release, also using perfectly `btrfs` & `zfs` file-systems, for Desktop & Gaming.
+   * Proxmox: Debian-Based, point-release, also using `btrfs` & `zfs` file-systems, for Server, hosting 'OPNsense', 'pfSense' (Firewall, Networks-Management), & other OSs & Server-applications.
+   * True-NAS-Scale: Debian-based, point-release, also use `zfs` file-system, as the name already say… this's a open source & free of charge NAS.
+   * Some other Linux-es with Live-ISO-GUI &|| CLI, need in addition to be partitioned & formatted in advance. Forall the EFI (`vfat`) and ROOT is using `ext4` &|| `btrfs` .
+   * BSD-based-OSs: all point-release, using `udf` & `zfs` file-systems, used on SOC, Desktops & Servers. 
+2. Windows®: Yes, also Win (10/11) 'understand' (meanwhile) 4K & 4Kn OOTB. For Servers & Desktops, there you havent the 'opportunity' to make partition & formatting by youself. Conversion of DC to 4Kn over manufacturer-win-apps or each Linux-Live-ISOs like… CachyOS, ArcolinuxD, Artix-Linux-Plasma, Bluestar-Linux, but also Kubunt or each other Linux-ISO with GUI-Installer.
+3. MAC-OS should also be able to 'understand' 4K or 4Kn… earlier than Win, but i have no knowledges about this OS.
+
 
 ### 4. Let's go!
-1. In case you want erase the whole 'nvme', use the command below. READ THE NOTES FIRST !!! 
+1. In case you want erase the whole 'nvme', use the command below. READ THE NOTES FIRST❗️ 
 
-- **Note 1**: This erase all the data including 'hidden bootsector', 'RAID-configuration-data' & older 'OS-starting-data'. Use it only if you know what you are doing. In case your 'nvme' have a lower 'PBS/LBS' you can at end note the elapsed time and compare it after the 'switching'.
-
-- **Note** 2: This step is necessary if your drive was used as 'BSD' (Free-BSD, True-NAS) data carrier or hosted a such operating-system (OS), if it was used in a RAID-assembly & or ZFS, hosted an OS starting with old BIOS and not with UEFI.
-
-- **Note 3**: Countercheck that you choose the right drive with `lsblk` command or equivalent.
+* **Note-s:**
+   * This erase all the data including 'hidden bootsector', 'RAID-configuration-data' & older 'OS-starting-data'. Use it only if you know what you are doing. In case your 'nvme' have a lower 'LBS/LBA' you can at end note the elapsed time and compare it after the 'switching'.
+   * This step is necessary if your drive was used as 'BSD' (Free-BSD, True-NAS) data carrier or hosted a such operating-system (OS), if it was used in a RAID-assembly & or ZFS, hosted an OS starting with old BIOS and not with UEFI.
+   * Countercheck that you choose the right drive with `lsblk` command or equivalent.
+* Speed-Test & deletion of all data from a data carrier.  If the disk is not empty & you still need the data... copy, clone, save this data to another disk BEFORE this 'operation'.
 ```
 dd if=/dev/zero of=/dev/nvme0n1 bs=4096 status=progress
 ```
@@ -114,7 +131,7 @@ I/O size (minimum/optimal): 4096 bytes / 4096 bytes
 - 2000398934016 bytes = 1863 GiB
 7. Recheck the speed⁉️
 - **Note**: The Linux-Kernel is (most probably) not yet aware of your made changes, use command-s <br/>
-   `kpartx -u /dev/nvme0n1` or `partprobe -s` or reboot before issuing the command!
+   `kpartx -u /dev/nvme0n1` or `partprobe -s` or `reboot` before issuing the command!
 ```
 dd if=/dev/zero of=/dev/nvme0n1 bs=4096 status=progress
 ```
@@ -142,13 +159,13 @@ sgdisk -o /dev/nvme0n1
 ```
 3. In case you cannot reach the drive issue this command and reboot:
 ```
-blkdiscard /dev/nvme0n1
+blkdiscard -f /dev/nvme0n1
 ```
 #### 5.2. Partitioning
-- **Note 1**: Assure you use full KiB, MiB, GiB and not KB, MB, GB. Use besides an uniformed measure, on my side I prefer GiB. Calculate in advance the partitions sizes, e.g. from command `fdisk -l /dev/nvme0n1` I know my drive contain '2000398934016 bytes' divided by '1024x1024x1024' (this is equal to 1 GiB) have I a total of 1863 GiB. 
+* **Note 1**: Assure you use full KiB (2^10), MiB (2^20), GiB (2^30) and not KB, MB, GB or TB. Use besides an uniformed measure, on my side I prefer GiB. Calculate in advance the partitions sizes, e.g. from command `fdisk -l /dev/nvme0n1` . I know my drive contain '2000398934016 bytes' divided by '1024x1024x1024' (this is equal to 1 GiB = 2^30), have I a total of 1863 GiB. 
 
 1. Common Partitions-Types / Overview 
-* **Note 2**: Many Linux-Distros use today (already) 2 GiB for the EFI-Partition, the maximum is 4 GiB & this do i too. For cloning a partition or for replace DC (Data-Carrier) in a RAID or Partition an Intel-Optane for [ZIL & LOG in True-NAS](https://www.truenas.com/docs/references/zilandslog/) is convenient to assign the ROOT-Partition (or others partitions) a certain or fix amount of Storage-Quantity/-Place. See also [partitions-codes](https://github.com/Advantaged/4Kn-Formatting/blob/main/partition-codes.md)
+* **Note 2**: Many Linux-Distros use today (already) 2 GiB for the EFI-Partition, the maximum is 4 GiB & this do i too. That permit you to 'store' (really) many 'image' of your os that permit you to rollback (in case) your OS at any point. For cloning a partition or for replace DC (Data-Carrier) in a RAID or Partition an Intel-Optane for [ZIL & LOG in True-NAS](https://www.truenas.com/docs/references/zilandslog/) is convenient to assign to the ROOT-Partition (or others partitions) a certain or fix amount of Storage-Quantity/-Place. See also [partitions-codes](https://github.com/Advantaged/4Kn-Formatting/blob/main/partition-codes.md)
 * EFI:
 `   sgdisk -n 1:1M:+4G -t 1:ef00 -c 1:EFI-0003 /dev/nvme0n1`
 * EXT4 [ArchLinux-Wiki / UEFI-GPT](https://wiki.archlinux.org/title/partitioning):
@@ -174,29 +191,42 @@ blkdiscard /dev/nvme0n1
 * Other information and man-page of 'sgdisk`
    * [SGDISK](https://www.rodsbooks.com/gdisk/sgdisk-walkthrough.html)
    * [SGDISK Man-Page](https://man.archlinux.org/man/sgdisk.8.en)
-   * SGDISK is for scripting, you can use [CGDISK](https://man.archlinux.org/man/cgdisk.8.en) or [CFDISK](https://linux.die.net/man/8/cfdisk) instead.
+   * SGDISK is for scripting, you can use [CGDISK](https://man.archlinux.org/man/cgdisk.8.en) or [CFDISK](https://linux.die.net/man/8/cfdisk) with a CLI-GUI instead.
    * CGDISK usage: `cgdisk /dev/nvme0n1`
 
 #### 5.3. Formatting
 - **Note 1**: In case you get error messages by formatting... again, the Kernel not yet recognized your changes. Use command-s:<br/>
    `kpartx -u /dev/nvme0n1` or `partprobe -s` or reboot.
-1. Formatting EFI-partition in 4Kn/4KiB
+1. Formatting [EFI-partition](https://man7.org/linux/man-pages/man8/mkfs.vfat.8.html) in/with 4Kn/4KiB
 ```
 mkfs.vfat -F32 -s 2 -S 4096 -n EFI -v /dev/nvme0n1p1
 ```
--  here we define the file-system-name or label within the option `-n EFI` , see `mkfs.vfat --help` .
--  This Volume-Label don't appear in your "File-Manager" but, e.g., permit "rEFInd" to find & use the right logo for your OS (Opearatings-System).
-2. Formatting OS-part in 4Kn/4KiB
-- **Note 2**: In case you want to format in `btrfs`, jump to point **5.4.2**
+-  This Volume-Label don't appear in your "File-Manager", but e.g., permit "rEFInd" to detect & use the right logo for your OS (Opearatings-System-s).
+2. Formatting [EXT4-ROOT](https://linux.die.net/man/8/mkfs.ext4) in/with 4Kn/4KiB
 ```
 mkfs.ext4 -F -b 4096 -L ARTIX-0003 -F /dev/nvme0n1p2
 ```
--  here we define the file-system-name or volume-label within the option `-L ARTIX-0003` , see `mkfs.ext4 --help` .
-3. Formatting SWAP-part in 4Kn/4KiB
+3. Formatting [SWAP-part](https://man7.org/linux/man-pages/man8/mkswap.8.html) in 4Kn/4KiB.
+   * It's recommended to use [ZRAM](https://github.com/Advantaged/ZRAM) instead of SWAP. SWAP in contrary to "EXT4", use by default 4K & don't need any label, but, just for completness…:
 ```
-mkswap -f -p 4096 /dev/nvme0n1p3
+mkswap -f -p 4096 -L SWAP-0003 /dev/nvme0n1p3
 ```
-4. These are the results (without Swap) of my 'nvme' with Arcolinux-D:
+4. Formatting [BTRFS-ROOT](https://man7.org/linux/man-pages/man8/mkfs.btrfs.8.html).
+`   mkfs.btrfs -s 4096 -f -L ARCOL-D /dev/nvme0n1p2`
+* **Note:**
+   * Here are other options (`-O`) , RAID-possibility & Subvolume to be created, more informations under [Archlinux-Wiki](https://wiki.archlinux.org/title/btrfs).
+   * Some Linux-OS, like CachyOS, can hadle perfectly BTRFS in/with 4K
+5. "Formatting" ZFS-ROOT.
+* Basic Information:
+   * Here we cannot talk anymore about formatting, because ZFS is completely different from other file systems & is much more than a file system alone.
+   * For desktops i recommend warmly [CachyOS](https://cachyos.org/) handling perfectly 4Kn, ZFS, BTRFS & all other file systems without any manual intervention.
+   * In ZFS you (or your OS) build a `zpool` containing one (stripe-mode) or more partitions of the same size on different DC (all kind of RAIDs ➕ Z-RAIDs) &|| data-carriers (DC). The name of `zpool` is arbitrary (as in other so-called file systems too).
+   * By creating a `zpool` you will automatically assign a name like `zpool1` , `tank1` or others at your pleasure.
+   * Underneath the `zpool` will be created the `zvol`-s also known as 'data-sets', that represent the folders & sub-folders. Those manes are NOT arbitrary.
+   * More information in the [Archlinux-Wiki](https://wiki.archlinux.org/title/ZFS) & [OpenZFS](https://openzfs.github.io/openzfs-docs/Getting%20Started/index.html). 
+* Create a `zpool` manually:
+
+6. These are the results (without Swap) of my 'nvme' with Arcolinux-D:
 ```
 fdisk -l /dev/nvme0n1
 Disk /dev/nvme0n1: 1.82 TiB, 2000398934016 bytes, 488378646 sectors
@@ -205,13 +235,13 @@ Units: sectors of 1 * 4096 = 4096 bytes
 Sector size (logical/physical): 4096 bytes / 4096 bytes
 I/O size (minimum/optimal): 4096 bytes / 4096 bytes
 Disklabel type: gpt
-Disk identifier: 00B33A78-780C-42E1-ABB1-CB5E038E8B0E
+Disk identifier: <my hidden disk-identifier>
 
 Device           Start       End   Sectors  Size Type
 /dev/nvme0n1p1     256   1048831   1048576    4G EFI System
 /dev/nvme0n1p2 1048832 486015231 484966400  1.8T Linux filesystem
 ```
-5. These are the results (with swap = RAM x 1.5 = 96 GiB) of my 'nvme' with Artix-Linux-Plasma:
+7. These are the results (with swap = RAM x 1.5 = 96 GiB) of my 'nvme' with Artix-Linux-Plasma:
 ```
 fdisk -l /dev/nvme0n1
 Disk /dev/nvme0n1: 1,82 TiB, 2000398934016 bytes, 488378646 sectors
@@ -220,26 +250,27 @@ Units: sectors of 1 * 4096 = 4096 bytes
 Sector size (logical/physical): 4096 bytes / 4096 bytes
 I/O size (minimum/optimal): 4096 bytes / 4096 bytes
 Disklabel type: gpt
-Disk identifier: 4C8B88A0-1775-478B-8B90-857B4A705215
+Disk identifier: <my hidden disk-identifier>
 
 Device             Start       End   Sectors  Size Type
 /dev/nvme0n1p1       256    262399    262144    1G EFI System
 /dev/nvme0n1p2    262400 461635839 461373440  1,7T Linux filesystem
 /dev/nvme0n1p3 461635840 486801663  25165824   96G Linux swap
 ```
-6. Explanation-Table of partitioning & formatting
+7. Explanation-Table of partitioning & formatting
 
 | Partition N° | Dimension | Type | Description |
 | --- | --- | ---- | ---- |
-| 1 | 1 GiB | EFI (ef00) | large enough for 'rEFInd' and many other 'OS' |
-| 2 | 1760 GiB | Linux (8300) | 32 GiB x 55 |
+| 1 | 4 GiB | EFI (ef00) | large enough for 'rEFInd' and many other 'OS' |
+| 2 | 1760 GiB | Linux (8304) | 32 GiB x 55 |
 | 3 | 96 GiB | Swap (8200) | 32 GiB x 3 |
 | empty | 6 GiB | none | overprovisioning: 3 Gib by no swap 6 Gib with swap |
 
-- **Note** for formatting:
-  - a) 1. EFI: Use exact above parameter
+- **Notes** for formatting:
+  - a) 1. EFI: Use exact above parameter, unless you use CachyOS.
   - b) 2. Ext4: We have to force twice this operation '-F' in order to take effect.
-  - c) 3. Swap: Normally the 'page-size' with the option `-f -p 4096` [is not necessary](https://www.computerhope.com/unix/mkswap.htm)
+  - c) 3. Swap: Normally the 'page-size' with the option `-f -p 4096` [is not necessary](https://www.computerhope.com/unix/mkswap.htm) as well the volume-labelling.
+
 #### 5.4. Additional steps in case of need
 1. Labelling Partitions even after partitioning:
 ```
@@ -252,17 +283,18 @@ sgdisk -c 3:SWAP-0003 /dev/nvme0n1
 2. Labelling Volume even after formatting:
 * [VFAT](https://man7.org/linux/man-pages/man8/mkfs.vfat.8.html):
 `   mkfs.vfat -n EFI -v /dev/nvme0n1p1`
-* [EXT4](https://linux.die.net/man/8/mkfs.ext4):
-  `   mkfs.ext4 -L ARCOL-D -F /dev/nvme0n1p2`
+* [EXT4](https://www.cyberciti.biz/faq/linux-modify-partition-labels-command-to-change-diskname/#:~:text=You%20need%20to%20use%20the,partition%20label%20for%20security%20reasons.):
+  `   e2label /dev/nvme0n1p2 ARCOL-D`
+* [SWAP-Label](https://man7.org/linux/man-pages/man8/swaplabel.8.html):
+`   swaplabel -L LAZY-SW /dev/nvme0n1p3`
 * [BTRFS](https://man7.org/linux/man-pages/man8/mkfs.btrfs.8.html):
-`   mkfs.btrfs -L ARCOL-D /dev/nvme0n1p2`
-* ZFS:
-`   sgdisk -n 2:0:+1850G -t 2:bf00 -c 2:CACHYOS-Z /dev/nvme0n1`
-* [SWAP](https://man7.org/linux/man-pages/man8/mkswap.8.html):
-`   sgdisk -n 3:0:+8G -t 3:8200 -c 3:SWAP-0003 /dev/nvme0n1`
+   * [By unmounted filesystem](https://askubuntu.com/questions/236681/filesystem-label-rename) `btrfs filesystem label <device> <newlabel>` : 
+`   btrfs filesystem ARCOL-D /dev/nvme0n1p2 ARCOL-L`
+* [ZFS](https://docs.oracle.com/cd/E19253-01/819-5461/gaypf/) `zfs rename [actual name] [new name]`:
+`   zfs rename zwol1 tank1`
   
-  
-3. Format OS-part to [btrfs](https://wiki.archlinux.org/title/btrfs)
+#### 5.5 Format BTRFS  
+1. Format OS-part to [btrfs](https://wiki.archlinux.org/title/btrfs)
 - Install in case `btrfs-progs`. In most of the today’s latest Linux distributions, btrfs package comes as pre-installed. If not, install btrfs package using the following command. 
 ```
 pacman -S --needed --noconfirm btrfs-progs
@@ -271,7 +303,7 @@ pacman -S --needed --noconfirm btrfs-progs
 ```
 modprobe btrfs
 ```
-- Format finally the OS-part. partitioned as `8300` Linux-fs as `btrfs`
+- Format finally the OS-part, partitioned as `8304` Linux-fs as `btrfs`
 ```
 mkfs.btrfs -s 4096 -f -L ARCOL-D /dev/nvme0n1p2
 ```
@@ -290,6 +322,27 @@ UUID=<uuid-of-dev-nvme0n1p2>  /home noatime,space_cache=v2,compress=zstd,ssd,dis
 3 aur/timeshift 22.06.5-1 [+308 ~15.72]
     A system restore utility for Linux
 ```
+#### 5.6. "Format" [ZFS](https://docs.oracle.com/cd/E19253-01/819-5461/gaynr/index.html)
+* **Very inmportasnt note-s:**
+   * The command [`zpool create`](https://openzfs.github.io/openzfs-docs/man/master/8/zfs-create.8.html) make both "pools" and "volumes" also called "Datasets" underneath the pool-s.
+   * Both `zpool` & `zvol`-s have many [options](https://www.funtoo.org/ZFS_as_Root_Filesystem) that must be set/configurated. That less a job for newbie.  
+* Install in case `zfs-dkms` , `zfs-utils` &|| other packages like `zrepl zfs-auto-snapshot` etc.. In some of the today’s latest Linux distributions, like CachyOS, are all ZFS-components already installed. If not, install at least these ZFS packages using the following command. 
+```
+paru -S --needed --noconfirm zfs-dkms zfs-utils
+```
+- Enable `zfs` in the Kernel. After zfs package has been installed on the system, now we need to enable the Kernel module for zfs using below command.
+```
+modprobe zfs
+```
+- "Format" finally (create a `zpool`) on the OS-part, partitioned as `bf00` 'Solaris Root', creating 'zfs-spool' called 'firstzp' with only one partition (stripe).
+```
+zpool create firstzp /dev/nvme0n1p2
+```
+- now we will create the most complicated "constellation" (RAID 10) out of my 4xNVME-Es each 2 TB
+```
+zpool create firstzp mirror /dev/nvme0n1p2 /dev/nvme1n1p2 mirror /dev/nvme2n1p2 /dev/nvme3n1p2
+```
+   * here the two mirrors are autoimatically striped with a resulting RAID-10 = two striped mirrors.
 ### 6. Convert/switch an SSD to 4Kn
 - Following this [Server-Forum](https://forums.servethehome.com/index.php?threads/how-to-reformat-hdd-ssd-to-512b-sector-size.4968/page-20) & this Video [Art of Server](https://www.youtube.com/watch?v=DAaTfv96V9w) we need an additional package to (`sg3_utils`) do this.
 
@@ -350,7 +403,7 @@ tune2fs -l /dev/sdd
 ```
 4. Change/switch LBA (logical block size)
 ```
-hdparm --verbose --set-sector-size 4096 --please-destroy-my-drive /dev/sdd
+hdparm --verbose --set-sector-size 4096 --force --please-destroy-my-drive /dev/sdd
 ```
 - in case something going wrong, try
 ```
@@ -358,4 +411,4 @@ hdparm --dco-restore /dev/sdd
 ```
 5. Check result repeating point **6.3.**
 
-- [x] **Done & Enjoy !** :wink:
+- ✅ **Done & Enjoy**❗️ :wink:
