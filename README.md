@@ -6,7 +6,7 @@ Convert & Format drives with 4096 PBS/LBS (phisical/logical-block-size), LBS is 
 - **General Note**: Some manufacturer use '4096' as 'physical_block_size' (PBS) but '512e' or '512' as 'logical_block_size' LBS/LBA, ([see here the differences](https://en.wikipedia.org/wiki/Advanced_Format#Overview) as well the [Arch-Linux Wiki](https://wiki.archlinux.org/title/Advanced_Format#Setting_native_sector_size)). Well, some manufacturer allow to modify/change the LBS (for-all by 'NVMe') and some don't. Some other use '4096n / 4Kn' (it's mean native) both as PBS and LBS (for-all by very big HDD's). The PBS is NOT changeable❗️
 
 ### 1. Scope of instructions
-1. Run a 'nvme' drive with '4096' Byte sectors instead of '512' or '512B'.
+1. Run a 'nvme' drive with '4096' Byte sectors instead of '512' or '512e'.
 2. The throughput of a drive is given by Manufacturer in 4KiB since more than two decade, & this not only by 'nvme' but also  by 'HDD' & 'SSD'.
 3. Still, [using 4KN formatting](https://carlosfelic.io/misc/how-to-switch-your-nvme-ssd-to-4kn-advanced-format/) for newer devices ensure they are operating in their native space, without any need for conversion to happen at the controller.
 4. These instructions are for Linux users, whether they are also valid for Apple, BSD or Windows operating systems… please find it in the related forums.
