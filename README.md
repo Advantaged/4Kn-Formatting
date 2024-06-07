@@ -3,7 +3,7 @@ Convert & Format drives with 4096 PBS/LBS (phisical/logical-block-size), LBS is 
 
 ## A comprehensive minimalistic compendium for newbies & proofs, about proper Data-Carrier-Handling of UEFI-GPT 'Disks' (DC) for using them not only with Linux but also with BSD, MAC & WIN.
 
-- **General Note**: Some manufacturer use '4096' as 'physical_block_size' (PBS) but '512e' or '512' as 'logical_block_size' LBS/LBA) ([see here the differences](https://en.wikipedia.org/wiki/Advanced_Format#Overview) as well the [Arch-Linux Wiki](https://wiki.archlinux.org/title/Advanced_Format#Setting_native_sector_size)). Well, some manufacturer allow to modify/change the LBS (for-all by 'NVMe') and some don't. Some other use '4096n / 4Kn' (it's mean native) both as PBS and LBS (for-all by very big HDD's). The PBS is NOT changeable❗️
+- **General Note**: Some manufacturer use '4096' as 'physical_block_size' (PBS) but '512e' or '512' as 'logical_block_size' LBS/LBA, ([see here the differences](https://en.wikipedia.org/wiki/Advanced_Format#Overview) as well the [Arch-Linux Wiki](https://wiki.archlinux.org/title/Advanced_Format#Setting_native_sector_size)). Well, some manufacturer allow to modify/change the LBS (for-all by 'NVMe') and some don't. Some other use '4096n / 4Kn' (it's mean native) both as PBS and LBS (for-all by very big HDD's). The PBS is NOT changeable❗️
 
 ### 1. Scope of instructions
 1. Run a 'nvme' drive with '4096' Byte sectors instead of '512' or '512B'.
