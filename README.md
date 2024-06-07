@@ -289,9 +289,9 @@ sgdisk -c 3:SWAP-0003 /dev/nvme0n1
 - **Note**: EFI & SWAP normally don't need a partition-label at all, but the ROOT-Partition-label is very important, e.g. for command: `blkid` .
 
 2. Labelling Volume even after formatting:
-* [VFAT](https://man7.org/linux/man-pages/man8/mkfs.vfat.8.html):
+* [VFAT](https://unix.stackexchange.com/questions/59751/set-a-vfat-volume-name-non-destructively):
 
-`   mkfs.vfat -n EFI -v /dev/nvme0n1p1`
+`   dosfslabel /dev/nvme0n1p1 EFI-NEW `
 
 * [EXT4](https://www.cyberciti.biz/faq/linux-modify-partition-labels-command-to-change-diskname/#:~:text=You%20need%20to%20use%20the,partition%20label%20for%20security%20reasons.):
 
