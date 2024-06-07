@@ -44,7 +44,7 @@ Convert & Format drives with 4096 PBS/LBS (phisical/logical-block-size), LBS is 
    * True-NAS-Scale: Debian-based, point-release, also use `zfs` file-system, as the name already say… this's a open source & free of charge NAS-OS.
    * Some other Linux-es with Live-ISO-GUI &|| CLI, need in addition to be partitioned & formatted in advance. Forall the EFI (`vfat`) and ROOT if using `ext4` or `btrfs` .
    * BSD-based-OSs: all point-release, using `udf` & `zfs` file-systems, used on SOC, Desktops & Servers. 
-2. Windows®: Yes, also Win (10/11) 'understand' (meanwhile) 4K & 4Kn OOTB. For Servers & Desktops, there you havent the 'opportunity' to make partition & formatting by youself. Conversion of DC to 4Kn over manufacturer-win-apps or each Linux-Live-ISOs like… CachyOS, ArcolinuxD, Artix-Linux-Plasma, Bluestar-Linux, but also Kubunt or each other Linux-ISO with GUI-Installer.
+2. Windows®: Yes, also Win (10/11) 'understand' (meanwhile) 4K & 4Kn OOTB. For Servers & Desktops, there you havent the 'opportunity' to make partition & formatting by youself. Conversion of DC to 4Kn over manufacturer-win-apps or each Linux-Live-ISOs like… CachyOS, ArcolinuxD, Artix-Linux-Plasma, Bluestar-Linux, but also Kubuntu or each other Linux-ISO with GUI-Installer.
 3. MAC-OS should also be able to 'understand' 4K or 4Kn… earlier than Win, but i have no knowledges about this OS.
 
 
