@@ -227,7 +227,7 @@ mkswap -f -p 4096 -L SWAP-0003 /dev/nvme0n1p3
    * For desktops i recommend warmly [CachyOS](https://cachyos.org/) handling perfectly 4Kn, ZFS, BTRFS & all other file systems without any manual intervention.
    * In ZFS you (or your OS) build a `zpool` containing one (stripe-mode) or more partitions of the same size on different DC (all kind of RAIDs ➕ Z-RAIDs) &|| data-carriers (DC). The name of `zpool` is arbitrary (as in other so-called file systems too).
    * By creating a `zpool` you will automatically assign a name like `zpool1` , `tank1` or others at your pleasure.
-   * Underneath the `zpool` will be created the `zvol`-s also known as 'data-sets', that represent the folders & sub-folders. Those manes are NOT arbitrary.
+   * Underneath the `zpool` will be created the `zvol`-s also known as 'data-sets', that represent the folders & sub-folders. Those names are NOT arbitrary if the OS is "sitting" just on them.
    * More information in the [Archlinux-Wiki](https://wiki.archlinux.org/title/ZFS) & [OpenZFS](https://openzfs.github.io/openzfs-docs/Getting%20Started/index.html). 
 * Create a `zpool` manually:
 
