@@ -167,14 +167,19 @@ blkdiscard -f /dev/nvme0n1
 1. Common Partitions-Types / Overview 
 * **Note 2**: Many Linux-Distros use today (already) 2 GiB for the EFI-Partition, the maximum is 4 GiB & this do i too. That permit you to 'store' (really) many 'image' of your os that permit you to rollback (in case) your OS at any point. For cloning a partition or for replace DC (Data-Carrier) in a RAID or Partition an Intel-Optane for [ZIL & LOG in True-NAS](https://www.truenas.com/docs/references/zilandslog/) is convenient to assign to the ROOT-Partition (or others partitions) a certain or fix amount of Storage-Quantity/-Place. See also [partitions-codes](https://github.com/Advantaged/4Kn-Formatting/blob/main/partition-codes.md)
 * EFI:
+
 `   sgdisk -n 1:1M:+4G -t 1:ef00 -c 1:EFI-0003 /dev/nvme0n1`
 * EXT4 [ArchLinux-Wiki / UEFI-GPT](https://wiki.archlinux.org/title/partitioning):
+
   `   sgdisk -n 2:0:+1850G -t 2:8304 -c 2:ARCO-D /dev/nvme0n1`
 * BTRFS (following [Stackexchange](https://unix.stackexchange.com/questions/617918/what-type-of-partition-guid-should-i-use-for-linux-with-btrfs), [Github](https://github.com/util-linux/util-linux/issues/1175) & [Arch-Wiki](https://wiki.archlinux.org/title/GPT_fdisk):
+  
 `   sgdisk -n 2:0:+1850G -t 2:8304 -c 2:ARCO-D /dev/nvme0n1`
 * ZFS:
+
 `   sgdisk -n 2:0:+1850G -t 2:bf00 -c 2:CACHYOS-Z /dev/nvme0n1`
 * SWAP:
+
 `   sgdisk -n 3:0:+8G -t 3:8200 -c 3:SWAP-0003 /dev/nvme0n1`
 
 * **Note-s 3**
@@ -185,8 +190,8 @@ blkdiscard -f /dev/nvme0n1
    * Labels for EFI & SWAP: EFI & SWAP don't need necessarily a label, hence omit in case `-c 1:EFI-0003` & `-c 3:SWAP-0003`.
    * First used Sector: The first writable sector on '512' DC is `2048`, the first writable sector on 4Kn is `256` equal 2048/8.
    
-* Once you’ve created partition successfully, you need to update the partition table changes to kernel for that let us run the partprobe command to add the disk information to kernel and after that list the partition as shown below.
-`   partprobe -s`
+* Once you’ve created partition successfully, you need to update the partition-table-changes to kernel, for that let us run the `partprobe -s` command to add the disk information to kernel and after that list the new partition.
+
 
 * Other information and man-page of 'sgdisk`
    * [SGDISK](https://www.rodsbooks.com/gdisk/sgdisk-walkthrough.html)
