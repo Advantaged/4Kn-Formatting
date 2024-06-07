@@ -216,7 +216,9 @@ mkfs.ext4 -F -b 4096 -L ARTIX-0003 -F /dev/nvme0n1p2
 mkswap -f -p 4096 -L SWAP-0003 /dev/nvme0n1p3
 ```
 4. Formatting [BTRFS-ROOT](https://man7.org/linux/man-pages/man8/mkfs.btrfs.8.html).
+
 `   mkfs.btrfs -s 4096 -f -L ARCOL-D /dev/nvme0n1p2`
+
 * **Note:**
    * Here are other options (`-O`) , RAID-possibility & Subvolume to be created, more informations under [Archlinux-Wiki](https://wiki.archlinux.org/title/btrfs).
    * Some Linux-OS, like CachyOS, can hadle perfectly BTRFS in/with 4K
