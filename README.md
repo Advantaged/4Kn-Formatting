@@ -55,7 +55,7 @@ Convert & Format drives with 4096 PBS/LBS (phisical/logical-block-size), LBS is 
    * This erase all the data including 'hidden bootsector', 'RAID-configuration-data' & older 'OS-starting-data'. Use it only if you know what you are doing. In case your 'nvme' have a lower 'LBS/LBA' you can at end note the elapsed time and compare it after the 'switching'.
    * This step is necessary if your drive was used as 'BSD' (Free-BSD, True-NAS) data carrier or hosted a such operating-system (OS), if it was used in a RAID-assembly & or ZFS, hosted an OS starting with old BIOS and not with UEFI.
    * Countercheck that you choose the right drive with `lsblk` command or equivalent.
-* Speed-Test & deletion of all data from a data carrier.  If the disk is not empty & you still need the data... copy, clone, save this data to another disk BEFORE this 'operation'.
+* Speed-Test & deletion of all data from a data carrier.  If the disk is not empty & you still need the data... copy, clone, save this data to another disk BEFORE executing this 'operation'.
 ```
 dd if=/dev/zero of=/dev/nvme0n1 bs=4096 status=progress
 ```
