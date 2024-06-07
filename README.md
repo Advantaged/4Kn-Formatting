@@ -253,9 +253,9 @@ sgdisk -c 3:SWAP-0003 /dev/nvme0n1
 * [VFAT](https://man7.org/linux/man-pages/man8/mkfs.vfat.8.html):
 `   mkfs.vfat -n EFI -v /dev/nvme0n1p1`
 * [EXT4](https://linux.die.net/man/8/mkfs.ext4):
-  `   mkfs.ext4 -L ARTIX-0003 -F /dev/nvme0n1p2`
-* BTRFS (following [Stackexchange](https://unix.stackexchange.com/questions/617918/what-type-of-partition-guid-should-i-use-for-linux-with-btrfs), [Github](https://github.com/util-linux/util-linux/issues/1175) & [Arch-Wiki](https://wiki.archlinux.org/title/GPT_fdisk):
-`   sgdisk -n 2:0:+1850G -t 2:8304 -c 2:ARCO-D /dev/nvme0n1`
+  `   mkfs.ext4 -L ARCOL-D -F /dev/nvme0n1p2`
+* [BTRFS](https://man7.org/linux/man-pages/man8/mkfs.btrfs.8.html):
+`   mkfs.btrfs -L ARCOL-D /dev/nvme0n1p2`
 * ZFS:
 `   sgdisk -n 2:0:+1850G -t 2:bf00 -c 2:CACHYOS-Z /dev/nvme0n1`
 * [SWAP](https://man7.org/linux/man-pages/man8/mkswap.8.html):
@@ -273,7 +273,7 @@ modprobe btrfs
 ```
 - Format finally the OS-part. partitioned as `8300` Linux-fs as `btrfs`
 ```
-mkfs.btrfs -s 4096 -f /dev/nvme0n1p2
+mkfs.btrfs -s 4096 -f -L ARCOL-D /dev/nvme0n1p2
 ```
 - Other information on ['btfrs'](https://www.tecmint.com/create-btrfs-filesystem-in-linux/)
 4. Mount options `btrfs` of OS-part on 'nvme' in `/etc/fstab`
