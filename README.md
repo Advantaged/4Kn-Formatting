@@ -13,7 +13,7 @@ Convert & Format drives with 4096 PBS/LBS (phisical/logical-block-size), LBS is 
 5. Preferably buy 4Kn-DC (Data-Carrier) also called Enterprise-DC like HGST (HDD) or modifiable with simple Linux-Commands (`nvme` ,  `sg_format` , `hdparm`) convertible DC. 
 
 ### 2. Basic requirements
-1. A 'nvme' drive supporting 4Kn directly or at least allow to switch between different (at least tween 512 & 4096) logical-sector-sizes (LBS or LBA).
+1. A 'nvme' drive supporting 4Kn directly or at least allow to switch between different (at least tween 512 & 4096) logical-sector-sizes (LBS/LBA).
 2. Manufacturer supporting switching are 'Corsair' (since at least model 'MP5xx' = PCI-e 3, let say a long tradition). The latter has not been checked all models/series, please contact me to make a complete list. Please commit all manufacturer, series and model you was able to convert, thanks.
 3. The increased throughput is assured by "PCI-e', this mean 'nvme' in 'M.2' design.
 4. A live installation-usb with a Linux-Distro (e.g. [Artix-Linux-Plasma](https://artixlinux.org/download.php)) or a computer that already has a Linux on it.
