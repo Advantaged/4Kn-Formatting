@@ -10,7 +10,7 @@ Convert & Format drives with 4096 PBS/LBS (phisical/logical-block-size), LBS is 
 2. The throughput of a drive is given by Manufacturer in 4KiB since more than two decade, & this not only by 'nvme' but also  by 'HDD' & 'SSD'.
 3. Still, [using 4KN formatting](https://carlosfelic.io/misc/how-to-switch-your-nvme-ssd-to-4kn-advanced-format/) for newer devices ensure they are operating in their native space, without any need of conversion to happen at the controller-side resulting in major speed & less warming.
 4. These instructions are for Linux users, whether they are also valid for Apple, BSD or Windows operating systems… please find it in the related forums.
-5. Preferably buy 4Kn-DC (Data-Carrier) also called Enterprise-DC like HGST (HDD) or with simple Linux-Commands (`nvme` ,  `sg_format` , `hdparm`) convertible DC. 
+5. Preferably buy 4Kn-DC (Data-Carrier) also called Enterprise-DC like HGST (HDD) or modifiable with simple Linux-Commands (`nvme` ,  `sg_format` , `hdparm`) convertible DC. 
 
 ### 2. Basic requirements
 1. A 'nvme' drive supporting 4Kn directly or at least allow to switch between different (at least tween 512 & 4096) logical-sector-sizes (LBS or LBA).
