@@ -231,7 +231,9 @@ mkswap -f -p 4096 -L SWAP-0003 /dev/nvme0n1p3
    * Underneath the `zpool` will be created the `zvol`-s also known as 'data-sets', that represent the folders & sub-folders. Those names are NOT arbitrary if the OS is "sitting" just on them.
    * More information in the [Archlinux-Wiki](https://wiki.archlinux.org/title/ZFS) & [OpenZFS](https://openzfs.github.io/openzfs-docs/Getting%20Started/index.html) & in chapter **5.6.**. 
 * Create a `zpool` manually:
+
 `  zpool create firstzp /dev/nvme0n1p2`
+
 6. These are the results (without Swap) of my 'nvme' with Arcolinux-D:
 ```
 fdisk -l /dev/nvme0n1
