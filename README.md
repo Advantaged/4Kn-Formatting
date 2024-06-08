@@ -167,19 +167,25 @@ blkdiscard -f /dev/nvme0n1
 1. Common Partitions-Types / Overview 
 * **Note 2**: Many Linux-Distros use today (already) 2 GiB for the EFI-Partition, the maximum is 4 GiB & this do i too. That permit you to 'store' (really) many 'image' of your os that permit you to rollback (in case) your OS at any point. For cloning a partition or for replace DC (Data-Carrier) in a RAID or Partition an Intel-Optane for [ZIL & LOG in True-NAS](https://www.truenas.com/docs/references/zilandslog/) is convenient to assign to the ROOT-Partition (or others partitions) a certain or fix amount of Storage-Quantity/-Place. See also [partitions-codes](https://github.com/Advantaged/4Kn-Formatting/blob/main/partition-codes.md)
 * EFI:
-
-`   sgdisk -n 1:1M:+4G -t 1:ef00 -c 1:EFI-0003 /dev/nvme0n1`
+```
+  sgdisk -n 1:1M:+4G -t 1:ef00 -c 1:EFI-0003 /dev/nvme0n1
+```
 * EXT4 [ArchLinux-Wiki / UEFI-GPT](https://wiki.archlinux.org/title/partitioning):
-
-`   sgdisk -n 2:0:+1850G -t 2:8304 -c 2:ARCO-D /dev/nvme0n1`
+```
+   sgdisk -n 2:0:+1850G -t 2:8304 -c 2:ARCO-D /dev/nvme0n1
+```
 * BTRFS (following [Stackexchange](https://unix.stackexchange.com/questions/617918/what-type-of-partition-guid-should-i-use-for-linux-with-btrfs), [Github](https://github.com/util-linux/util-linux/issues/1175) & [Arch-Wiki](https://wiki.archlinux.org/title/GPT_fdisk):
-`   sgdisk -n 2:0:+1850G -t 2:8304 -c 2:ARCO-D /dev/nvme0n1`
+```
+  sgdisk -n 2:0:+1850G -t 2:8304 -c 2:ARCO-D /dev/nvme0n1
+```
 * ZFS:
-
-`   sgdisk -n 2:0:+1850G -t 2:bf00 -c 2:CACHYOS-Z /dev/nvme0n1`
+```
+   sgdisk -n 2:0:+1850G -t 2:bf00 -c 2:CACHYOS-Z /dev/nvme0n1
+```
 * SWAP:
-
-`   sgdisk -n 3:0:+8G -t 3:8200 -c 3:SWAP-0003 /dev/nvme0n1`
+```
+   sgdisk -n 3:0:+8G -t 3:8200 -c 3:SWAP-0003 /dev/nvme0n1
+```
 
 * **Note-s 3**
    * SWAP-partition, in case you want one... reduce the size of OS-partition accordingly.
@@ -216,8 +222,9 @@ mkfs.ext4 -F -b 4096 -L ARTIX-0003 -F /dev/nvme0n1p2
 mkswap -f -p 4096 -L SWAP-0003 /dev/nvme0n1p3
 ```
 4. Formatting [BTRFS-ROOT](https://man7.org/linux/man-pages/man8/mkfs.btrfs.8.html).
-
-`   mkfs.btrfs -s 4096 -f -L ARCOL-D /dev/nvme0n1p2`
+```
+   mkfs.btrfs -s 4096 -f -L ARCOL-D /dev/nvme0n1p2
+```
 
 * **Note:**
    * Here are other options (`-O`) , RAID-possibility & Subvolume to be created, more informations under [Archlinux-Wiki](https://wiki.archlinux.org/title/btrfs).
@@ -231,8 +238,9 @@ mkswap -f -p 4096 -L SWAP-0003 /dev/nvme0n1p3
    * Underneath the `zpool` will be created the `zvol`-s also known as 'data-sets', that represent the folders & sub-folders. Those names are NOT arbitrary if the OS is "sitting" just on them.
    * More information in the [Archlinux-Wiki](https://wiki.archlinux.org/title/ZFS) & [OpenZFS](https://openzfs.github.io/openzfs-docs/Getting%20Started/index.html) & in chapter **5.6.**. 
 * Create a `zpool` manually:
-
-`  zpool create firstzp /dev/nvme0n1p2`
+```
+  zpool create firstzp /dev/nvme0n1p2
+```
 
 6. These are the results (without Swap) of my 'nvme' with Arcolinux-D:
 ```
@@ -290,25 +298,30 @@ sgdisk -c 3:SWAP-0003 /dev/nvme0n1
 
 2. Labelling Volume even after formatting:
 * [VFAT](https://unix.stackexchange.com/questions/59751/set-a-vfat-volume-name-non-destructively):
-
-`   dosfslabel /dev/nvme0n1p1 EFI-NEW `
+```
+   dosfslabel /dev/nvme0n1p1 EFI-NEW
+```
 
 * [EXT4](https://www.cyberciti.biz/faq/linux-modify-partition-labels-command-to-change-diskname/#:~:text=You%20need%20to%20use%20the,partition%20label%20for%20security%20reasons.):
-
-  `   e2label /dev/nvme0n1p2 ARCOL-D`
+```
+   e2label /dev/nvme0n1p2 ARCOL-D
+```
 
 * [SWAP-Label](https://man7.org/linux/man-pages/man8/swaplabel.8.html):
-
-`   swaplabel -L LAZY-SW /dev/nvme0n1p3`
+```
+   swaplabel -L LAZY-SW /dev/nvme0n1p3
+```
 
 * [BTRFS](https://man7.org/linux/man-pages/man8/mkfs.btrfs.8.html):
    * [By unmounted filesystem](https://askubuntu.com/questions/236681/filesystem-label-rename) `btrfs filesystem label <device> <newlabel>` :
-
-`   btrfs filesystem ARCOL-D /dev/nvme0n1p2 ARCOL-L`
+```
+   btrfs filesystem ARCOL-D /dev/nvme0n1p2 ARCOL-L
+```
 
 * [ZFS](https://docs.oracle.com/cd/E19253-01/819-5461/gaypf/) `zfs rename [actual name] [new name]`:
-
-`   zfs rename zwol1 tank1`
+```
+   zfs rename zwol1 tank1
+```
   
 #### 5.5 Format BTRFS  
 1. Format OS-part to [btrfs](https://wiki.archlinux.org/title/btrfs)
