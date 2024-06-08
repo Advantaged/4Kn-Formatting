@@ -420,7 +420,7 @@ tune2fs -l /dev/sdd
 ```
 4. Change/switch LBA (logical block size)
 ```
-hdparm --verbose --set-sector-size 4096 --force --please-destroy-my-drive /dev/sdd
+hdparm --verbose --set-sector-size 4096 --please-destroy-my-drive /dev/sdd
 ```
 - in case something going wrong, try
 ```
