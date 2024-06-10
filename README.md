@@ -321,7 +321,7 @@ sgdisk -c 3:SWAP-0003 /dev/nvme0n1
 
 * [ZFS](https://docs.oracle.com/cd/E19253-01/819-5461/gaypf/) `zfs rename [actual name] [new name]`:
 ```
-   zfs rename zwol1 tank1
+   zfs rename zpool1 tank1
 ```
   
 #### 5.5 Format BTRFS  
