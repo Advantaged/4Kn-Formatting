@@ -209,7 +209,7 @@ blkdiscard -f /dev/nvme0n1
    `kpartx -u /dev/nvme0n1` or `partprobe -s` or reboot.
 1. Formatting [EFI-partition](https://man7.org/linux/man-pages/man8/mkfs.vfat.8.html) in/with 4Kn/4KiB
 ```
-mkfs.vfat -F32 -s 2 -S 4096 -n EFI -v /dev/nvme0n1p1
+mkfs.vfat -F32 -s 1 -S 4096 -n EFI -v /dev/nvme0n1p1
 ```
 -  This Volume-Label don't appear in your "File-Manager", but e.g., permit "rEFInd" to detect & use the right logo for your OS (Opearatings-System-s).
 2. Formatting [EXT4-ROOT](https://linux.die.net/man/8/mkfs.ext4) in/with 4Kn/4KiB
