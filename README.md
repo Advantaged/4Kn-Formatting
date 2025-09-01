@@ -1,9 +1,9 @@
 # 4Kn-Formatting
-Convert & Format drives with 4096 PBS/LBS (phisical/logical-block-size), LBS is also called LBA.
+Convert & Format drives with 4096 PSS/LSS (phisical/logical-sector-size), LLS is also called LBA.
 
 ## A comprehensive minimalistic compendium for newbies & proofs, about proper Data-Carrier-Handling of UEFI-GPT 'Disks' (DC) for using them not only with Linux but also with BSD, MAC & WIN.
 
-- **General Note**: Some manufacturer use '4096' as 'physical_block_size' (PBS) but '512e' or '512' as 'logical_block_size' LBS/LBA, ([see here the differences](https://en.wikipedia.org/wiki/Advanced_Format#Overview) as well the [Arch-Linux Wiki](https://wiki.archlinux.org/title/Advanced_Format#Setting_native_sector_size)). Well, some manufacturer allow to modify/change the LBS (for-all by 'NVMe') and some don't. Some other use '4096n / 4Kn' (it's mean native) both as PBS and LBS (for-all by very big HDD's). The PBS is NOT changeable❗️
+- **General Note**: Some manufacturer use '4096' as 'physical_block_size' (PBS/PSS) but '512e' or '512' as 'logical_block_size' LBS/LSS/LBA, ([see here the differences](https://en.wikipedia.org/wiki/Advanced_Format#Overview) as well the [Arch-Linux Wiki](https://wiki.archlinux.org/title/Advanced_Format#Setting_native_sector_size)). Well, some manufacturer allow to modify/change the LBS (for-all by 'NVMe') and some don't. Some other use '4096n / 4Kn' (it's mean native) both as PBS and LBS (for-all by very big HDD's). The PBS is NOT changeable❗️
 
 ### 1. Scope of instructions
 1. Run a 'nvme' drive with '4096' Byte sectors instead of '512' or '512e'.
@@ -13,7 +13,7 @@ Convert & Format drives with 4096 PBS/LBS (phisical/logical-block-size), LBS is 
 5. Preferably buy 4Kn-DC (Data-Carrier) also called Enterprise-DC like HGST (HDD) or modifiable with simple Linux-Commands (`nvme` ,  `sg_format` , `hdparm`) convertible DC. 
 
 ### 2. Basic requirements
-1. A 'nvme' drive supporting 4Kn directly or at least allow to switch between different (at least tween 512 & 4096) logical-sector-sizes (LBS/LBA).
+1. A 'nvme' drive supporting 4Kn directly or at least allow to switch between different (at least tween 512 & 4096) logical-sector-sizes (LBS/LSS/LBA).
 2. Manufacturer supporting switching are 'Corsair' (since at least model 'MP5xx' = PCI-e 3, let say a long tradition). Please contact me to make a complete list. Please commit all manufacturer, series and model you was able to convert, thanks.
 3. The increased throughput is assured by "PCI-e', this mean 'nvme' in 'M.2' design.
 4. A live installation-usb with a Linux-Distro (e.g. Arcolinux-D, CachyOS…) or a computer that already has a Linux installed on it.
@@ -413,7 +413,7 @@ sg_format --format --size=4096 /dev/sdb
 pacman -S --needed --noconfirm hdparm sg3_utils
 ```
 2. Individuate drive with `lsblk` command.
-3. Detect "Logical  Sector size" and "Physical Sector size"
+3. Detect "Logical  Sector Size" and "Physical Sector Size"
 ```
 cat /sys/block/sdd/queue/physical_block_size
 
