@@ -10,7 +10,7 @@ Convert & Format drives with 4096 PSS/LSS (phisical/logical-sector-size), LBS (l
 * **Archlinux: (using pacman)**
 
 ```
-pacman -S --needed --noconfirm nvme-cli gptfdisk multipath-tools
+sudo pacman -S --needed --noconfirm nvme-cli gptfdisk multipath-tools
 ```
 
 * **Debian/Ubuntu (using apt):**
