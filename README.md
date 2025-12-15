@@ -30,8 +30,11 @@ Convert & Format drives with 4096 PSS/LSS (phisical/logical-sector-size), LBS is
 ### Step 2. Check LBA-status/mode and possibility to 'format namespace':
 
 * **-Code:**
+
 `nvme id-ns /dev/nvme0n1 -H | grep LBA`
+
 * **-output:**
+
 ```
 LBA Format  0 : Metadata Size: 0   bytes - Data Size: 512 bytes - Relative Performance: 0x2 Good (in use)
 LBA Format  1 : Metadata Size: 0   bytes - Data Size: 4096 bytes - Relative Performance: 0x1 Better
@@ -39,9 +42,11 @@ LBA Format  1 : Metadata Size: 0   bytes - Data Size: 4096 bytes - Relative Perf
 ### Step 3. Format or switch the drive:
 
 * **-Code:**
+
 `nvme format /dev/nvme0n1 -l 1`
 
 * **-output:**
+
 `Success formatting namespace:1`
 
 - **Note**: This tell the 'nvme'-controller to use the storage cells in '4KiB'-blocks. Of course, due change/switch of blocks-dimension are all data lost, hence is called 'formatting'.
@@ -49,9 +54,11 @@ LBA Format  1 : Metadata Size: 0   bytes - Data Size: 4096 bytes - Relative Perf
 ### 4. Recheck LBA-status/mode and possibility to 'format namespace':
 
 * **-Code:**
+
 `nvme id-ns /dev/nvme0n1 -H | grep LBA`
 
 * **-output:**
+
 ```
 LBA Format  0 : Metadata Size: 0   bytes - Data Size: 512 bytes - Relative Performance: 0x2 Good 
 LBA Format  1 : Metadata Size: 0   bytes - Data Size: 4096 bytes - Relative Performance: 0x1 Better (in use)
