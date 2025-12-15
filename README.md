@@ -67,7 +67,7 @@ Success formatting namespace:1
 
 - **Note**: This tell the 'nvme'-controller to use the storage cells in '4KiB'-blocks. Of course, due change/switch of blocks-dimension are all data lost, hence is called 'formatting'.
 
-### 4. Recheck LBA-status/mode and possibility to 'format namespace':
+### 4. Recheck LBA-status/mode:
 
 * **-Code:**
 
