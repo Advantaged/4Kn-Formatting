@@ -3,7 +3,7 @@ Convert & Format drives with 4096 PSS/LSS (phisical/logical-sector-size), LBS (l
 
 ## A minimalistic instruction-set for newbies & proofs, about switching of NVMe DC (Data-Carrier) to 4Kn (4K/4096 natural) LSS/LBS/LBA. 
 
-* **Note:** For extensive instructions & more, see/read Extensive-Readme file.
+* **Note:** For extensive instructions & more, see/read [Extensive-Readme](https://github.com/Advantaged/4Kn-Formatting/blob/main/Extensive-Readme.md) file.
 
 ### Step 1. Install missing programs if needed:
 
