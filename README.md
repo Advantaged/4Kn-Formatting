@@ -42,7 +42,7 @@ sudo emerge --ask=n nvme-cli gptfdisk multipath-tools
 * **-Code:**
 
 ```
-nvme id-ns /dev/nvme0n1 -H | grep LBA
+sudo nvme id-ns /dev/nvme0n1 -H | grep LBA
 ```
 
 * **-output:**
@@ -56,7 +56,7 @@ LBA Format  1 : Metadata Size: 0   bytes - Data Size: 4096 bytes - Relative Perf
 * **-Code:**
 
 ```
-nvme format /dev/nvme0n1 -l 1
+sudo nvme format /dev/nvme0n1 -l 1
 ```
 
 * **-output:**
@@ -72,7 +72,7 @@ Success formatting namespace:1
 * **-Code:**
 
 ```
-nvme id-ns /dev/nvme0n1 -H | grep LBA
+sudo nvme id-ns /dev/nvme0n1 -H | grep LBA
 ```
 
 * **-output:**
