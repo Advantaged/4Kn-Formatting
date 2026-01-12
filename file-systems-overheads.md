@@ -6,7 +6,7 @@ we consider only the future-oriented FS like `bcachefs`, `btrfs` & `zfs`.
 - 4 GiB `ef00` (EFI), this's the maximum assignable capacity/space for this partition, don't be stingy with this partition.
 - 1850 GiB `bf00` (ZFS-ROOT).
 - ~9 GiB free/empty @ end of DC (data-carrier), ~5 GiB on e.g. 500 GB DC.
-- NO `swap` & NO `zswap` BUT `zram` configured according to physical RAM
+- NO `swap` & NO `zswap` BUT `zram` configured according to physical RAM.
 
 ### `zfs` Overhead
 
