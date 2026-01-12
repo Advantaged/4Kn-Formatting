@@ -1,6 +1,6 @@
 #### Another important topic to be considered by choosing a file-system is the so called overhead, this primarily concerns `bcachefs`, `btrfs` & `zfs`.
 we don't consider at this point the "old" standard `ext4` file-system, the reason for this is the lack of further development on this FS, e.g. the necessity to use twice the option force (`-F`) as you in [Extensive-Readme](https://github.com/Advantaged/4Kn-Formatting/blob/main/Extensive-Readme.md) can read.
-we consider only the future-oriented FS line `bcachefs`, `btrfs` & `zfs`.
+we consider only the future-oriented FS like `bcachefs`, `btrfs` & `zfs`.
 
 ### Partitioning-Example based on a 2-TB (~1863 GiB) NVMe:
 - 4 GiB `ef00` (EFI).
