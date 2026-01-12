@@ -8,10 +8,20 @@
 
 ### NVMe-PCIe:
 
-* **Corsair MP600**, since at least ***MP5xx*** series.
-* **Crucial T700**
-* **Intel 750** (only series)
-
+- **Corsair MP600**, since at least ***MP5xx*** series.
+- **Crucial T700**
+- **Intel 750** (only series)
+- **Kingston:**
+  - **KC3000 and DC2000M** (enterprise) models support 4Kn formatting if firmware allows. Verified using `openSeaChest_Format`.
+- KIOXIA:
+  - **CD6-R** and **CM7** series (enterprise) support 4Kn formatting across various capacities, including 1.92 TB and 3.84 TB.
+- **Micron:**
+  - **7400/7450 series** (including models ≤3.84 TB) support switching from 512e to 4Kn via `nvme format -l 1`.
+  - **The 9400/9550 series** also support configurable sector sizes, even on sub-4TB capacities.
+- **Seagate:**
+  - **Nytro 5000/7000 series** (enterprise NVMe) support 4Kn on capacities as low as 1.92 TB.
+- **Solidigm (formerly Intel):**
+  - **D5-P5316** and select **P5520/P5620** models support 4Kn, though most are ≥4TB. Some lower-capacity enterprise drives are configurable.
 
 
 ## HDD:
