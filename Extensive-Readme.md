@@ -57,7 +57,7 @@ Convert & Format drives with 4096 PSS/LSS (phisical/logical-sector-size), LBS is
    * Countercheck that you choose the right drive with `lsblk` command or equivalent.
 * Speed-Test & deletion of all data from a data carrier.  If the disk is not empty & you still need the data... copy, clone, save this data to another disk BEFORE executing this 'operation'.
 ```
-dd if=/dev/zero of=/dev/nvme0n1 bs=4096 status=progress
+dd if=/dev/zero of=/dev/nvme0n1 bs=4M status=progress
 ```
 2. Install missing programs if needed:
 ```
@@ -133,7 +133,7 @@ I/O size (minimum/optimal): 4096 bytes / 4096 bytes
 - **Note**: The Linux-Kernel is (most probably) not yet aware of your made changes, use command-s <br/>
    `kpartx -u /dev/nvme0n1` or `partprobe -s` or `reboot` before issuing the command!
 ```
-dd if=/dev/zero of=/dev/nvme0n1 bs=4096 status=progress
+dd if=/dev/zero of=/dev/nvme0n1 bs=4M status=progress
 ```
 ### 5. Partitioning & Formatting
 - **Note 1**: Here are three different things to setup; 
@@ -170,6 +170,7 @@ blkdiscard -f /dev/nvme0n1
 ```
   sgdisk -n 1:1M:+4G -t 1:ef00 -c 1:EFI-0003 /dev/nvme0n1
 ```
+ - Set `4192M` as size of EFI partition if you want install CachyOS!
 * EXT4 [ArchLinux-Wiki / UEFI-GPT](https://wiki.archlinux.org/title/partitioning):
 ```
    sgdisk -n 2:0:+1850G -t 2:8304 -c 2:ARCO-D /dev/nvme0n1
